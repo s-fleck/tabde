@@ -9,6 +9,7 @@
 #'
 #' @examples
 tabde <- function(col_names, col_types, ...){
+  stopifnot(do.call(is_equal_length, c(list(col_names, col_types), list(...))))
 
   res <- data.frame(
     col_names = col_names,
@@ -43,15 +44,11 @@ tabde_fwf <- function(
   end,
   ...
 ){
-  res <- data.frame(
+  tabde(
     col_names = col_names,
     col_types = col_types,
-    begin,
-    end,
-    ...,
-    stringsAsFactors = FALSE,
-    row.names = NULL
+    begin = begin,
+    end = end,
+    ...
   )
-
-  table_design(res)
 }
