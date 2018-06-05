@@ -13,7 +13,9 @@ tabde <- function(col_names, col_types, ...){
   res <- data.frame(
     col_names = col_names,
     col_types = col_types,
-    ...
+    ...,
+    stringsAsFactors = FALSE,
+    row.names = NULL
   )
 
   table_design(res)
@@ -44,7 +46,11 @@ tabde_fwf <- function(
   res <- data.frame(
     col_names = col_names,
     col_types = col_types,
-    ...
+    begin,
+    end,
+    ...,
+    stringsAsFactors = FALSE,
+    row.names = NULL
   )
 
   table_design(res)
