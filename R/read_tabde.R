@@ -7,7 +7,12 @@
 #'
 #' @examples
 read_tabde <- function(file){
-  res <- read.csv2(file, header = TRUE, row.names = NULL)
+  res <- utils::read.csv2(
+    file,
+    header = TRUE,
+    row.names = NULL,
+    stringsAsFactors = FALSE
+  )
 
   res <- table_design(res)
 
