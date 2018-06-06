@@ -8,7 +8,11 @@
 #' @examples
 table_design <- function(x){
   stopifnot(all(c("col_name", "col_type") %in% names(x)))
-  class(x) <- union("table_design", class(x))
+
+  if (!"table_design" %in% class(x)){
+    class(x) <- union("table_design", class(x))
+  }
+
   x
 }
 
