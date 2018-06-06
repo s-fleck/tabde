@@ -2,10 +2,13 @@
 #'
 #' @param x a `data.frame`
 #'
-#' @return a `data.frame`  with the colums `col_names` and `col_types`
+#' @return a `data.frame` with class [table_design]
 #' @export
 #'
 #' @examples
+#'
+#' get_tabde(iris)
+#'
 get_tabde <- function(x){
   stopifnot(is.data.frame(x))
 

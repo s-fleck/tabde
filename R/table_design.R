@@ -1,13 +1,7 @@
-#' Title
-#'
-#' @param x
-#'
-#' @return
-#' @export
-#'
-#' @examples
 table_design <- function(x){
   stopifnot(all(c("col_name", "col_type") %in% names(x)))
+  stopifnot(is.character(x$col_name))
+  stopifnot(is.character(x$col_type))
 
   if (!"table_design" %in% class(x)){
     class(x) <- union("table_design", class(x))
@@ -19,14 +13,6 @@ table_design <- function(x){
 
 
 
-#' Title
-#'
-#' @param x
-#'
-#' @return
-#' @export
-#'
-#' @examples
 table_design_fwf <- function(x){
   stopifnot(all(c("fwf_start", "fwf_end") %in% names(x)))
   x <- table_design(x)
@@ -37,14 +23,6 @@ table_design_fwf <- function(x){
 
 
 
-#' Title
-#'
-#' @param x
-#'
-#' @return
-#' @export
-#'
-#' @examples
 table_design_sql <- function(x){
   stopifnot(all(c("sql_type", "sql_opts") %in% names(x)))
   x <- table_design(x)
@@ -55,14 +33,19 @@ table_design_sql <- function(x){
 
 
 
-#' Title
-#'
-#' @param x
-#'
-#' @return
+#' @param x any \R Object
+#' @rdname tabde
+#' @export
+is_table_design <- function(x){
+  inherits(x, "table_design")
+}
+
+
+
+
+#' @rdname tabde
 #' @export
 #'
-#' @examples
 is_table_design_sql <- function(x){
   inherits(x, "table_design_sql")
 }
@@ -70,29 +53,9 @@ is_table_design_sql <- function(x){
 
 
 
-#' Title
-#'
-#' @param x
-#'
-#' @return
+#' @rdname tabde
 #' @export
 #'
-#' @examples
 is_table_design_fwf <- function(x){
   inherits(x, "table_design_fwf")
-}
-
-
-
-
-#' Title
-#'
-#' @param x
-#'
-#' @return
-#' @export
-#'
-#' @examples
-is_table_design <- function(x){
-  inherits(x, "table_design")
 }

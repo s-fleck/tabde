@@ -1,12 +1,25 @@
-#' Title
+#' Check If a Data Frame Matches a Table Design
 #'
-#' @param x
-#' @param table_design
+#' If used with \pkg{assertthat}, `matches_tabde()` produces verbose error
+#' messages.
 #'
-#' @return
+#' @param x a `data.frame`
+#' @param table_design a [table_design]
+#'
+#' @return `logical`
 #' @export
 #'
 #' @examples
+#' td <- get_tabde(iris)
+#'
+#' matches_tabde(iris, td)
+#' matches_tabde(cars, td)
+#'
+#' \dontrun{
+#'   library(assertthat)
+#'   assert_that(matches_tabde(cars, td))
+#' }
+#'
 matches_tabde <- function(x, table_design){
   stopifnot(is_table_design(table_design))
   identical(names(x), table_design$col_name) &&
@@ -35,12 +48,17 @@ attr(matches_tabde, "fail") <- function(call, env){
     setequal(names(x), table_design$col_name) &&
     !identical(names(x), table_design$col_name)
   ) {
-    msg["ord"] <- "column order does not match table design"
+    msg["ord"] <- paste(
+      "- column order does not match table design:",
+      paste(" ", paste(colnames(x), collapse = ", ")),
+      paste(" ", paste(table_design$col_name, collapse = ", ")),
+      sep = "\n"
+    )
   } else {
     missing_in_table_design <- setdiff(names(x), table_design$col_name)
     if (!is_empty(missing_in_table_design)){
       msg["mit"] <- paste(
-        "column names not in table design:",
+        "- columns not in table design:",
         paste(missing_in_table_design, collapse = ", ")
       )
     }
@@ -48,7 +66,7 @@ attr(matches_tabde, "fail") <- function(call, env){
     missing_in_x <- setdiff(table_design$col_name, names(x))
     if (!is_empty(missing_in_x)){
       msg["mix"] <- paste(
-        sprintf("column names not in '%s':", xname),
+        sprintf("- columns not in '%s':", xname),
         paste(missing_in_x, collapse = ", ")
       )
     }
@@ -65,7 +83,7 @@ attr(matches_tabde, "fail") <- function(call, env){
 
   if (any(sel)){
     msg[["clas"]] <- paste(
-      "column types in 'x' do not match table design:",
+      "- column types in 'x' do not match table design:",
       paste(
         sprintf(
           "%s (%s != %s)",

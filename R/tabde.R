@@ -1,13 +1,18 @@
-#' Title
+#' Table Design
 #'
-#' @param col_names
-#' @param col_types
+#' Table designs are `data.frames` that contain meta-info on other `data.frames`
+#' such as column names and types. Those types can be used for consistency
+#' checks (see [matches_tabde()]) and for generating sql `CREATE TABLE`
+#' statements (see [as_sql()])
+#'
+#' @param col_names `character` vector. column names
+#' @param col_types `character` vector. column types
 #' @param ...
 #'
-#' @return
+#' @aliases table_design
+#' @return a `data.frame` of class `table_design`
 #' @export
 #'
-#' @examples
 tabde <- function(
   col_name,
   col_type,
@@ -29,18 +34,11 @@ tabde <- function(
 
 
 
-#' Title
 #'
-#' @param col_names
-#' @param col_types
-#' @param begin
-#' @param end
-#' @param ...
-#'
-#' @return
+#' @rdname tabde
+#' @param fwf_start `integer` vector. fwf start positons
+#' @param fwf_end  `integer` vector. fwf end positons
 #' @export
-#'
-#' @examples
 tabde_fwf <- function(
   col_name,
   col_type,
@@ -62,18 +60,12 @@ tabde_fwf <- function(
 
 
 
-#' Title
-#'
-#' @param col_names
-#' @param col_types
-#' @param begin
-#' @param end
-#' @param ...
-#'
-#' @return
+#' @rdname tabde
+#' @param sql_type  `character` vector. SQL Data Types as supported by target
+#'   DBMS System.
+#' @param sql_opts  `character` vector. SQL Options to be used by [as_sql()]
+#'   (for example `NOT NULL`)
 #' @export
-#'
-#' @examples
 tabde_sql <- function(
   col_name,
   col_type,

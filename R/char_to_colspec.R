@@ -1,4 +1,4 @@
-#' Conver Verbal Data Type Description to `readr::col_spec`
+#' Conver Character Data Type Description to `readr::col_spec`
 #'
 #' @param x a `character` vector of data types.
 #'
@@ -19,6 +19,7 @@ as_colspec <- function(x){
 
 
 
+#' @export
 as_colspec.character <- function(x){
   assert_namespace("readr")
 
@@ -36,7 +37,7 @@ as_colspec.character <- function(x){
   y[x == "time"]      <- list(readr::col_time())
 
 
-  assert_that(!any(vapply(y, is.null, FALSE)))
+  stopifnot(!any(vapply(y, is.null, FALSE)))
 
   do.call(readr::cols, y)
 }
