@@ -3,12 +3,12 @@ context("get_tabde")
 
 test_that("get_tabde works as expected", {
   expect_identical(
-    get_tabde(iris)$col_names,
+    get_tabde(iris)$col_name,
     names(iris)
   )
 
   expect_identical(
-    get_tabde(iris)$col_types,
+    get_tabde(iris)$col_type,
     unname(vapply(iris, class, ""))
   )
 

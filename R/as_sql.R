@@ -1,0 +1,114 @@
+#' Title
+#'
+#' @param x
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+as_sql <- function(x, ...){
+  UseMethod("as_sql")
+}
+
+
+
+#' Title
+#'
+#' @param x
+#' @param tname
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+#' @examples
+as_sql.table_design_sql <- function(
+  x,
+  tname,
+  ...
+){
+  generate_sql_create_table(
+    tname = tname,
+    col_names = x$col_name,
+    col_types = x$sql_type,
+    sql_opts  = x$sql_opts
+  )
+}
+
+
+
+
+
+
+#' Generate SQL CREATE TABLE statements
+#'
+#' Creates SQL CREATE TABLE statements from a vector of column names and
+#' a vector of column types
+#'
+#' @param tname name of target sql table
+#' @param col_names column names of target sql table
+#' @param col_types column types of target sql table. Columns of type NA will
+#'   be skipped
+#' @param sql_opts column options of target sql table (for example `NOT
+#'   NULL`)
+#' @param dialect optional: checks if input is valid for target SQL dialect.
+#'   Currenlty the only supported value is `"db2"`.
+#'
+#' @return a `CREATE TABLE` statement as a text string
+#' @export
+#'
+#' @examples
+#' #'
+#' sqlgen_create_table(
+#'   "example.table",
+#'   c("numbers", "animals"),
+#'   c("integer", "varchar(8)"),
+#'   c("NOT NULL", "")
+#' )
+#'
+#' # [1] "CREATE TABLE example.table (numbers INTEGER NOT NULL, animals VARCHAR(x))"
+#'
+generate_sql_create_table <- function(
+  tname,
+  col_names,
+  col_types,
+  sql_opts = rep("", length(col_names))
+){
+  # preconditions
+  stopifnot(is_scalar_character(tname))
+  stopifnot(is.character(col_names))
+  stopifnot(is.character(col_types))
+  stopifnot(is_equal_length(col_names, col_types, sql_opts))
+
+  stopifnot(all(
+    is.na(col_names) == FALSE |
+    is.na(col_names) == is.na(col_types)
+  ))
+
+
+  col_types  <- toupper(col_types)
+
+
+  # process input
+  empty_cols <- is.na(col_names) && is.na(col_types)
+  col_names  <- col_names[!empty_cols]
+  col_types  <- col_types[!empty_cols]
+
+  if(any(is.na(col_types))){
+    warning(sprintf(
+      "Skipping %s columns with col_type 'NA'", sum(is.na(col_types))
+    ))
+    col_names <- col_names[!is.na(col_types)]
+    col_types <- col_types[!is.na(col_types)]
+    sql_opts  <- sql_opts[!is.na(col_types)]
+  }
+
+
+  cols <- paste0(
+    trimws(paste0(col_names, " ", col_types, " ", sql_opts)),
+    collapse = ", "
+  )
+
+  sprintf("CREATE TABLE %s (%s)", tname, cols)
+}
