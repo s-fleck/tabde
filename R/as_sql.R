@@ -1,33 +1,43 @@
-#' Title
+#' Generate an SQL CREATE TABLE Statement From a tabde Table Design
 #'
-#' @param x
-#' @param ...
+#' This does not perform any sanity check on the input data. `col_names` and
+#' `sql_type` must be compatible with the DBMS that you want to use.
 #'
-#' @return
+#' @param x any \R object
+#' @param ... passes on to methods
+#'
+#' @return `character` scalar. An SQL CREATE TABLE statement.
 #' @export
 #'
 #' @examples
-as_sql <- function(x, ...){
+#'
+#' td <- tabde_sql(
+#'   col_name = c("numbers", "letters"),
+#'   col_type = c("integer", "character"),
+#'   sql_type = c("smallint", "varchar(255)")
+#' )
+#'
+#' as_sql(td, "test_table")
+#'
+as_sql <- function(
+  x,
+  ...
+){
   UseMethod("as_sql")
 }
 
 
 
-#' Title
-#'
-#' @param x
-#' @param tname
-#' @param ...
-#'
-#' @return
+
+#' @param tname `character` scalar. name of target table
+#' @rdname as_sql
 #' @export
-#'
-#' @examples
 as_sql.table_design_sql <- function(
   x,
   tname,
   ...
 ){
+  stopifnot(is_scalar_character(tname))
   generate_sql_create_table(
     tname = tname,
     col_names = x$col_name,
@@ -35,8 +45,6 @@ as_sql.table_design_sql <- function(
     sql_opts  = x$sql_opts
   )
 }
-
-
 
 
 
@@ -59,15 +67,14 @@ as_sql.table_design_sql <- function(
 #' @export
 #'
 #' @examples
-#' #'
-#' sqlgen_create_table(
+#'
+#' generate_sql_create_table(
 #'   "example.table",
 #'   c("numbers", "animals"),
 #'   c("integer", "varchar(8)"),
 #'   c("NOT NULL", "")
 #' )
 #'
-#' # [1] "CREATE TABLE example.table (numbers INTEGER NOT NULL, animals VARCHAR(x))"
 #'
 generate_sql_create_table <- function(
   tname,
@@ -95,7 +102,7 @@ generate_sql_create_table <- function(
   col_names  <- col_names[!empty_cols]
   col_types  <- col_types[!empty_cols]
 
-  if(any(is.na(col_types))){
+  if (any(is.na(col_types))){
     warning(sprintf(
       "Skipping %s columns with col_type 'NA'", sum(is.na(col_types))
     ))
