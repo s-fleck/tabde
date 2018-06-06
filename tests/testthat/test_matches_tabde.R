@@ -19,3 +19,45 @@ test_that("matches_tabde works as expected", {
   dat[[1]] <- as.integer(dat[[1]])
   expect_true(matches_tabde(dat, td))
 })
+
+
+
+
+test_that("matches_tabde produces informative error messages", {
+
+  td <- tabde::tabde(
+    col_name = c("Sepal.Length", "Sepal.Width", "blubb", "Species"),
+    col_type = c("numeric", "integer", "blubb", "numeric")
+  )
+
+  expect_error(
+    assertthat::assert_that(matches_tabde(iris, td)),
+    "column types"
+  )
+
+  expect_error(
+    assertthat::assert_that(matches_tabde(iris, td)),
+    "column names"
+  )
+
+  expect_error(
+    assertthat::assert_that(matches_tabde(iris, td)),
+    "blubb"
+  )
+
+
+  td <- tabde::tabde(
+    col_name = c("Sepal.Width", "Sepal.Length", "Petal.Length", "Petal.Width", "Species"),
+    col_type = c("numeric", "numeric", "numeric", "numeric", "factor")
+  )
+
+  expect_error(
+    assertthat::assert_that(matches_tabde(iris, td)),
+    "column order"
+  )
+
+
+})
+
+
+
