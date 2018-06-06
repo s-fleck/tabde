@@ -65,6 +65,9 @@ read_tabde_fwf <- function(file){
 #' `write_tabde()` is a wrapper around `write.csv2()` that saves files in the
 #' recommended format.
 #'
+#' @param x a [table_design] Object
+#' @param overwrite `scalar` character. Overwrite `file` if it exists?
+#'
 #' @return `write_tabde()` and `use_tabde()` return `file` (invisibly)
 #' @rdname read_tabde
 #' @export
@@ -73,6 +76,7 @@ write_tabde <- function(
   file,
   overwrite = FALSE
 ){
+  stopifnot(is_table_design(x))
   stopifnot(is.data.frame(x))
   stopifnot(is_scalar_logical(overwrite))
 

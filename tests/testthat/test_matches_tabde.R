@@ -32,12 +32,12 @@ test_that("matches_tabde produces informative error messages", {
 
   expect_error(
     assertthat::assert_that(matches_tabde(iris, td)),
-    "column types"
+    "columns"
   )
 
   expect_error(
     assertthat::assert_that(matches_tabde(iris, td)),
-    "column names"
+    "column types"
   )
 
   expect_error(

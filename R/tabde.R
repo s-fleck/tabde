@@ -5,9 +5,9 @@
 #' checks (see [matches_tabde()]) and for generating sql `CREATE TABLE`
 #' statements (see [as_sql()])
 #'
-#' @param col_names `character` vector. column names
-#' @param col_types `character` vector. column types
-#' @param ...
+#' @param col_name `character` vector. column names
+#' @param col_type `character` vector. column types
+#' @param ... passed on to methods
 #'
 #' @aliases table_design
 #' @return a `data.frame` of class `table_design`

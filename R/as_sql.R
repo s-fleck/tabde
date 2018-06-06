@@ -60,8 +60,6 @@ as_sql.table_design_sql <- function(
 #'   be skipped
 #' @param sql_opts column options of target sql table (for example `NOT
 #'   NULL`)
-#' @param dialect optional: checks if input is valid for target SQL dialect.
-#'   Currenlty the only supported value is `"db2"`.
 #'
 #' @return a `CREATE TABLE` statement as a text string
 #' @export
