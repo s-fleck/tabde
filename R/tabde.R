@@ -6,7 +6,13 @@
 #' statements (see [as_sql()])
 #'
 #' @param col_name `character` vector. column names
-#' @param col_type `character` vector. column types
+#' @param col_type `character` vector. Valid `data.frame` column types. `NA`
+#'   and blank (`""`) are also allowed.
+#'  `tabde_fwf()` Objects can converted to `readr::col_spec` Objects.
+#'  For these `NA`s in `col_type` will be interpeted skipped (via
+#'  `readr::col_skip()`) and blanks (`""`) will be interpreted as
+#'  `readr::col_guess()`
+#'
 #' @param ... passed on to methods
 #'
 #' @aliases table_design table_design_fwf table_design_sql
@@ -15,7 +21,7 @@
 #'
 tabde <- function(
   col_name,
-  col_type,
+  col_type = rep(NA_character_, length(col_name)),
   ...
 ){
   stopifnot(do.call(is_equal_length, c(list(col_name, col_type), list(...))))
@@ -34,6 +40,7 @@ tabde <- function(
 
 
 
+
 #'
 #' @rdname tabde
 #' @param fwf_start `integer` vector. fwf start positons
@@ -41,7 +48,7 @@ tabde <- function(
 #' @export
 tabde_fwf <- function(
   col_name,
-  col_type,
+  col_type = rep(NA_character_, length(col_name)),
   fwf_start,
   fwf_end,
   ...
@@ -62,15 +69,16 @@ tabde_fwf <- function(
 
 #' @rdname tabde
 #' @param sql_type  `character` vector. SQL Data Types as supported by target
-#'   DBMS System.
+#'   DBMS System. Columns wil col_type `NA` will be skipped when creating
+#'   SQL statements.
 #' @param sql_opts  `character` vector. SQL Options to be used by [as_sql()]
 #'   (for example `NOT NULL`)
 #' @export
 tabde_sql <- function(
   col_name,
-  col_type,
-  sql_type,
-  sql_opts = rep("", length(col_name)),
+  col_type = rep(NA_character_, length(col_name)),
+  sql_type = rep(NA_character_, length(col_name)),
+  sql_opts = rep(NA_character_, length(col_name)),
   ...
 ){
   res <- tabde(

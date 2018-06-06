@@ -43,12 +43,6 @@ test_that("tabde_fwf works as expected", {
 
 test_that("tabde_sql works as expected", {
 
-  expect_error(tabde_sql(
-    col_name = c("a", "b"),
-    col_type = c("character", "numeric")
-  ))
-
-
   tres <- tabde_sql(
     col_name = c("a", "b"),
     col_type = c("character", "numeric"),

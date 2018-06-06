@@ -1,7 +1,8 @@
 #' Check If a Data Frame Matches a Table Design
 #'
 #' If used with \pkg{assertthat}, `matches_tabde()` produces verbose error
-#' messages.
+#' messages. `NA` and blank `""` `col_type`s will not be checked (always return
+#' `TRUE`)
 #'
 #' @param x a `data.frame`
 #' @param table_design a [table_design]
@@ -22,10 +23,14 @@
 #'
 matches_tabde <- function(x, table_design){
   stopifnot(is_table_design(table_design))
-  identical(names(x), table_design$col_name) &&
+  table_design$col_type[trimws(table_design$col_type) == ""] <- NA_character_
   identical(
-    vapply(x, function(.) class(.)[[1]], "", USE.NAMES = FALSE),
-    table_design$col_type
+    names(x)[!is.na(table_design$col_type)],
+    table_design$col_name[!is.na(table_design$col_type)]
+  ) &&
+  identical(
+    vapply(x, function(.) class(.)[[1]], "", USE.NAMES = FALSE)[!is.na(table_design$col_type)],
+    table_design$col_type[!is.na(table_design$col_type)]
   )
 }
 

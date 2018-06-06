@@ -60,3 +60,16 @@ test_that("matches_tabde produces informative error messages", {
 
 
 
+test_that("matches_tabde handles NA gracefully", {
+
+  td <- tabde::tabde(
+    col_name = c("Sepal.Length", "Sepal.Width",  "Petal.Length", "Petal.Width", "Species"),
+    col_type = c("numeric", "numeric", "", NA, "factor")
+  )
+
+  expect_true(matches_tabde(iris, td))
+})
+
+
+
+
