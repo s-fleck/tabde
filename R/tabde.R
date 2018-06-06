@@ -9,7 +9,7 @@
 #' @param col_type `character` vector. column types
 #' @param ... passed on to methods
 #'
-#' @aliases table_design
+#' @aliases table_design table_design_fwf table_design_sql
 #' @return a `data.frame` of class `table_design`
 #' @export
 #'
