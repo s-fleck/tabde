@@ -10,7 +10,7 @@ get_tabde <- function(x){
   stopifnot(is.data.frame(x))
 
   tabde(
-    col_names = names(x),
-    col_types = vapply(x, function(.x) class(.x)[[1]], "")
+    col_name = names(x),
+    col_type = vapply(x, function(.x) class(.x)[[1]], "")
   )
 }

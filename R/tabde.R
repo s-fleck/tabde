@@ -12,8 +12,8 @@ tabde <- function(col_names, col_types, ...){
   stopifnot(do.call(is_equal_length, c(list(col_names, col_types), list(...))))
 
   res <- data.frame(
-    col_names = col_names,
-    col_types = col_types,
+    col_name = col_name,
+    col_type = col_type,
     ...,
     stringsAsFactors = FALSE,
     row.names = NULL
@@ -45,8 +45,8 @@ tabde_fwf <- function(
   ...
 ){
   tabde(
-    col_names = col_names,
-    col_types = col_types,
+    col_name = col_name,
+    col_type = col_type,
     begin = begin,
     end = end,
     ...

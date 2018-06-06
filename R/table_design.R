@@ -41,6 +41,6 @@ table_design_fwf <- function(x){
 #' @examples
 is_df_tabde <- function(x){
   is.data.frame(x) &&
-  ("col_names" %in% names(x)) &&
-  ("col_types" %in% names(x))
+  ("col_name" %in% names(x)) &&
+  ("col_type" %in% names(x))
 }
