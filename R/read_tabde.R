@@ -68,7 +68,10 @@ read_tabde_fwf <- function(file){
 #' @param x a [table_design] Object
 #' @param overwrite `scalar` character. Overwrite `file` if it exists?
 #'
-#' @return `write_tabde()` and `use_tabde()` return `file` (invisibly)
+#' @return `write_tabde()` and `use_tabde()` return `file` (invisibly). This
+#'   is useful for piping the saved file, for example into
+#'   [\pkg{shed}](https://github.com/s-fleck/shed) (Shiny CSV Editor).
+#'
 #' @rdname read_tabde
 #' @export
 write_tabde <- function(
@@ -91,10 +94,13 @@ write_tabde <- function(
 
 
 
-#' `use_tabde()` is designed for use during package development. It generates
-#'   a table design from a `data.frame`, and saves it in `inst/table_design/`.
+#' `use_tabde()` is designed for use during package development. If `x` is
+#'   a `table_design()` it saves it directly to `inst/table_design/`. If `x`
+#'   is a normal `data.frame` it converts it to a `table_design`
+#'   via [get_tabde()] and then saves it
 #'
 #' @rdname read_tabde
+#' @export
 #'
 use_tabde <- function(
   x,
@@ -103,7 +109,12 @@ use_tabde <- function(
 ){
   assert_namespace("rprojroot")
 
-  td <- tabde::get_tabde(x)
+
+  if (!is_table_design(x)){
+    td <- tabde::get_tabde(x)
+  } else {
+    td <- x
+  }
 
 
   if (is.null(file)){
