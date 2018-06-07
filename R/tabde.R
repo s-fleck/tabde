@@ -6,12 +6,14 @@
 #' statements (see [as_sql()])
 #'
 #' @param col_name `character` vector. column names
-#' @param col_type `character` vector. Valid `data.frame` column types. `NA`
-#'   and blank (`""`) are also allowed.
-#'  `tabde_fwf()` Objects can converted to `readr::col_spec` Objects.
-#'  For these `NA`s in `col_type` will be interpeted skipped (via
-#'  `readr::col_skip()`) and blanks (`""`) will be interpreted as
-#'  `readr::col_guess()`
+#' @param col_type `character` vector. Valid `data.frame` column types. `NA`s
+#'   and the string `"#skip"` have special meanings.
+#'
+#'   `NA`s will be converted to `readr::col_guess()` by [as_colspec()] and
+#'   [matches_tabde()] will not check the classes of `NA` columns. In a similar
+#'   fashion `#skip` columns will be convertet to `readr::col_skip()` and
+#'   `matches_tabde` will not check if they are present in `dat` or not.
+#'
 #'
 #' @param ... passed on to methods
 #'

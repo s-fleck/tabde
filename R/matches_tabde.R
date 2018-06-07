@@ -1,11 +1,17 @@
 #' Check If a Data Frame Matches a Table Design
 #'
+#' If a columns has the `col_type` `NA` in the `table_design`, it will
+#' be checked if the column is present in `x`, but the column type can be
+#' arbitrary.
+#'
 #' If used with \pkg{assertthat}, `matches_tabde()` produces verbose error
-#' messages. `NA` and blank `""` `col_type`s will not be checked (always return
-#' `TRUE`)
+#' messages.
 #'
 #' @param x a `data.frame`
 #' @param table_design a [table_design]
+#' @param skip `character` vector. Columns where the `col_type` in
+#'   `table_design` matches any of the strings in `skip` will not be checked.
+#'   see also [as_colspec()].
 #'
 #' @return `logical`
 #' @export
@@ -21,12 +27,19 @@
 #'   assert_that(matches_tabde(cars, td))
 #' }
 #'
-matches_tabde <- function(x, table_design){
+matches_tabde <- function(
+  x,
+  table_design,
+  skip = "#skip"
+){
   stopifnot(is_table_design(table_design))
-  table_design$col_type[trimws(table_design$col_type) == ""] <- NA_character_
+
+  cols_skip <- table_design$col_name[table_design$col_type %in% skip]
+  x <- x[, !colnames(x) %in% cols_skip]
+  table_design <- table_design[!table_design$col_type %in% skip, ]
+
   identical(
-    names(x)[!is.na(table_design$col_type)],
-    table_design$col_name[!is.na(table_design$col_type)]
+    names(x), table_design$col_name
   ) &&
   identical(
     vapply(x, function(.) class(.)[[1]], "", USE.NAMES = FALSE)[!is.na(table_design$col_type)],
