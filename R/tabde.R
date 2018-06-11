@@ -43,7 +43,6 @@ tabde <- function(
 
 
 
-#'
 #' @rdname tabde
 #' @param fwf_start `integer` vector. fwf start positons
 #' @param fwf_end  `integer` vector. fwf end positons
