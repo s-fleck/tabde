@@ -16,7 +16,11 @@ read_tabde <- function(file){
     file,
     header = TRUE,
     row.names = NULL,
-    stringsAsFactors = FALSE
+    stringsAsFactors = FALSE,
+    colClasses = c(
+      col_name = "character",
+      col_type = "character"
+    )
   )
 
   res <- table_design(res)
