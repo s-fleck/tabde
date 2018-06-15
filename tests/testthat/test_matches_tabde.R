@@ -72,7 +72,41 @@ test_that("matches_tabde handles NA and #skip gracefully", {
   tdat <- iris
   tdat$Petal.Length <- NULL
   expect_true(matches_tabde(tdat, td))
- })
+})
+
+
+
+
+test_that("matches_tabde used domains", {
+
+  tdat <- data.frame(
+    x = c(LETTERS[c(4, 3, 2, 9, 10)]),
+    y = c(LETTERS[c(23, 1, 3, 19, 21)]),
+    stringsAsFactors = FALSE
+  )
+
+  td <- tabde(
+    col_name = c("x", "y"),
+    col_type = c("character", "character"),
+    domain   = c("letters", "letters")
+  )
+
+  ds <- domains(
+    "letters",
+    LETTERS
+  )
+
+  expect_true(matches_tabde(tdat, td))
+  expect_true(matches_tabde(tdat, td, domains = ds))
+
+  tdat$y <- c("bl", "b2", "b3", "b4", "b5")
+  expect_false(matches_tabde(tdat, td, domains = ds))
+
+  expect_error(
+    assertthat::assert_that(matches_tabde(tdat, td, domains = ds)),
+    "not in domain"
+  )
+})
 
 
 

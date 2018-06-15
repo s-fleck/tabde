@@ -30,22 +30,39 @@
 matches_tabde <- function(
   x,
   table_design,
-  skip = "#skip"
+  skip = "#skip",
+  domains = NULL
 ){
   stopifnot(is_table_design(table_design))
+  stopifnot(is.null(domains) || is_tabde_domains(domains))
 
   cols_skip <- table_design$col_name[table_design$col_type %in% skip]
   x <- x[, !colnames(x) %in% cols_skip]
   table_design <- table_design[!table_design$col_type %in% skip, ]
 
-  identical(
-    names(x), table_design$col_name
-  ) &&
-  identical(
+
+  if (!identical(names(x), table_design$col_name))
+    return(FALSE)
+
+  if (!identical(
     vapply(x, function(.) class(.)[[1]], "", USE.NAMES = FALSE)[!is.na(table_design$col_type)],
-    table_design$col_type[!is.na(table_design$col_type)]
-  )
+    table_design$col_type[!is.na(table_design$col_type)]))
+    return(FALSE)
+
+  if (!is.null(domains)){
+    for (nm in names(x)) {
+      dom  <- table_design[table_design$col_name == "x", "domain"]
+      vals <- domains[domains$domain == dom, ]$value
+      if (!all(x[[nm]] %in% vals)) return(FALSE)
+    }
+  }
+
+
+  TRUE
 }
+
+
+
 
 
 
@@ -56,6 +73,7 @@ attr(matches_tabde, "fail") <- function(call, env){
   xname <- deparse(call$x)
   x <- eval(call$x, envir = env)
   table_design <- eval(call$table_design, envir = env)
+  domains <- eval(call$domains, envir = env)
 
   msg <- sprintf(
     "'%s' does not match table design:", xname
@@ -113,6 +131,23 @@ attr(matches_tabde, "fail") <- function(call, env){
       )
     )
   }
+
+
+  if (!is.null(domains) && "domain" %in% names(table_design)){
+    for (nm in names(x)) {
+      dom  <- table_design[table_design$col_name == "x", "domain"]
+      vals <- domains[domains$domain == dom, ]$value
+      if (!all(x[[nm]] %in% vals)) {
+        msg[["dom"]] <- sprintf(
+          "- column %s: values %s not in domain '%s'",
+          nm,
+          paste(setdiff(x[[nm]], vals), collapse = ", "),
+          dom
+        )
+      }
+    }
+  }
+
 
   paste(msg, collapse = "\n")
 }
