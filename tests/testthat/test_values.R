@@ -1,4 +1,4 @@
-context("domains")
+context("value domains")
 
 
 test_that("domains works as expected", {

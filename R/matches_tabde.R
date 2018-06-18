@@ -33,7 +33,6 @@ matches_tabde <- function(
   skip = "#skip",
   values = NULL
 ){
-
   # precondtions
     stopifnot(is_table_design(table_design))
 
@@ -54,17 +53,20 @@ matches_tabde <- function(
     table_design <- table_design[!table_design$col_type %in% skip, ]
 
 
+    # col names
     if (!identical(names(x), table_design$col_name))
       return(FALSE)
 
+    # col types
     col_types <- vapply(x, function(.) class(.)[[1]], "", USE.NAMES = FALSE)
     sel_types <- !is.na(table_design$col_type)
     if (!identical(col_types[sel_types], table_design$col_type[sel_types]))
       return(FALSE)
 
+    # domains
     if (!is.null(values)){
       for (nm in names(x)) {
-        dom  <- table_design[table_design$col_name == "x", "col_domain"]
+        dom  <- table_design[table_design$col_name == nm, "col_domain"]
         vals <- values[values$domain == dom, ]$value
         if (!all(x[[nm]] %in% vals)) return(FALSE)
       }
@@ -73,10 +75,6 @@ matches_tabde <- function(
 
   TRUE
 }
-
-
-
-
 
 
 
