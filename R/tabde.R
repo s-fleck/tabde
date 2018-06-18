@@ -6,6 +6,7 @@
 #' statements (see [as_sql()])
 #'
 #' @param col_name `character` vector. column names
+#'
 #' @param col_type `character` vector. Valid `data.frame` column types. `NA`s
 #'   and the string `"#skip"` have special meanings.
 #'
@@ -15,11 +16,16 @@
 #'   `matches_tabde` will not check if they are present in `dat` or not.
 #'
 #'
+#' @param col_domain `character` vector. A valid domain for `col_name`. Domains
+#'   can be used by [`matches_tabde()`] and [`as_sql()`] to check for valid
+#'   (discrete) values if a [`values`] Object is passed to these functions.
+#'
 #' @param ... passed on to methods
 #'
 #' @aliases table_design table_design_fwf table_design_sql
 #' @return a `data.frame` of class `table_design`
 #' @export
+#' @rdname tabde
 #'
 tabde <- function(
   col_name,
@@ -73,6 +79,7 @@ tabde_fwf <- function(
   col_type = rep(NA_character_, length(col_name)),
   fwf_start,
   fwf_end,
+  col_domain = NULL,
   ...
 ){
   res <- tabde(
@@ -80,6 +87,7 @@ tabde_fwf <- function(
     col_type  = col_type,
     fwf_start = fwf_start,
     fwf_end   = fwf_end,
+    col_domain = col_domain,
     ...
   )
 
@@ -101,6 +109,7 @@ tabde_sql <- function(
   col_type = rep(NA_character_, length(col_name)),
   sql_type = rep(NA_character_, length(col_name)),
   sql_opts = rep(NA_character_, length(col_name)),
+  col_domain = NULL,
   ...
 ){
   res <- tabde(
@@ -108,6 +117,7 @@ tabde_sql <- function(
     col_type = col_type,
     sql_type = sql_type,
     sql_opts = sql_opts,
+    col_domain = col_domain,
     ...
   )
 
