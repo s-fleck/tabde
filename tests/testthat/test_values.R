@@ -1,26 +1,7 @@
 context("value domains")
 
 
-test_that("domains works as expected", {
-
-  values(
-    c("a", "a", "b", "b", "b"),
-    c(1:2, 1:3)
-  )
-
-
-  expect_error(
-    values(
-      c("a", "a", "b", "b", "b"),
-      c(1:2, c(1, 1, 2))
-    ),
-    "unique"
-  )
-})
-
-
-
-test_that("", {
+test_that("values works as expected", {
   vals <- values(
     c("letters", "letters", "numbers"),
     c("a", "b", 2)
@@ -41,4 +22,13 @@ test_that("", {
   expect_true(matches_tabde(df, td))
   expect_false(matches_tabde(df, td, values = vals))
   expect_true(matches_tabde(df[1:2, ], td, values = vals))
+
+
+  expect_error(
+    values(
+      c("a", "a", "b", "b", "b"),
+      c(1:2, c(1, 1, 2))
+    ),
+    "unique"
+  )
 })

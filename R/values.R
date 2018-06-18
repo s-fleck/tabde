@@ -1,12 +1,40 @@
-#' Value-Domains
+#' Value-Domains For Columns in Table Designs
 #'
 #'
-#' @param domain name oder id of the domain
+#' @param domain name oder id of the domain.
 #' @param value values that the `domains` can take
 #'
-#' @return ein `data.frame` der Klasse `domains`
+#' @return a `data.frame` of class `"tabde_values"`
 #' @export
 #'
+#' @examples
+#'
+#' vals <- values(
+#'   c("letters", "letters", "numbers"),
+#'   c("a", "b", 2)
+#' )
+#'
+#' td <- tabde(
+#'   col_name   = c("Alpha", "Num"),
+#'   col_type   = c("character", "numeric"),
+#'   col_domain = c("letters", "numbers")
+#' )
+#'
+#' df <- data.frame(
+#'   Alpha = c("a", "b", "c"),
+#'   Num   = c(2, 2, 3),
+#'   stringsAsFactors = FALSE
+#' )
+#'
+#'
+#' # Fails because df contains values not in `vals`:
+#' matches_tabde(df, td, values = vals)
+#'
+#' # Ok:
+#' matches_tabde(df[1:2, ], td, values = vals)
+#'
+#' # domains are only checked if `values` is passed to matches_tabde
+#' matches_tabde(df, td)
 values <- function(
   domain,
   value
