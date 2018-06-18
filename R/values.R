@@ -1,10 +1,13 @@
-#' SDomains
+#' Value-Domains
 #'
 #'
-#' @return eine `data.table` der Klasse `domains`
+#' @param domain name oder id of the domain
+#' @param value values that the `domains` can take
+#'
+#' @return ein `data.frame` der Klasse `domains`
 #' @export
 #'
-domains <- function(
+values <- function(
   domain,
   value
 ){
@@ -18,7 +21,7 @@ domains <- function(
       stringsAsFactors = FALSE,
       row.names = NULL
     ),
-    class = c("tabde_domains", "data.frame")
+    class = c("tabde_values", "data.frame")
   )
 
   if(!identical(unique(res), res)){
@@ -26,7 +29,6 @@ domains <- function(
   }
 
   res
-
 }
 
 
@@ -39,4 +41,4 @@ as_domains <- function(x){
 
 
 
-is_tabde_domains <- function(x) inherits(x, "tabde_domains")
+is_tabde_values <- function(x) inherits(x, "tabde_values")

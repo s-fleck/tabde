@@ -24,17 +24,38 @@
 tabde <- function(
   col_name,
   col_type = rep(NA_character_, length(col_name)),
+  col_domain = NULL,
   ...
 ){
-  stopifnot(do.call(is_equal_length, c(list(col_name, col_type), list(...))))
+  if (is.null(col_domain)){
+    stopifnot(do.call(
+      is_equal_length,
+      c(list(col_name, col_type), list(...))
+    ))
 
-  res <- data.frame(
-    col_name = col_name,
-    col_type = col_type,
-    ...,
-    stringsAsFactors = FALSE,
-    row.names = NULL
-  )
+    res <- data.frame(
+      col_name = col_name,
+      col_type = col_type,
+      ...,
+      stringsAsFactors = FALSE,
+      row.names = NULL
+    )
+  } else {
+    stopifnot(do.call(
+      is_equal_length,
+      c(list(col_name, col_type, col_domain), list(...))
+    ))
+
+    res <- data.frame(
+      col_name = col_name,
+      col_type = col_type,
+      col_domain = col_domain,
+      ...,
+      stringsAsFactors = FALSE,
+      row.names = NULL
+    )
+  }
+
 
   table_design(res)
 }

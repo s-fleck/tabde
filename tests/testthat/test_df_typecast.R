@@ -6,7 +6,7 @@ context("df_typecast")
 
 
 
-test_that("df_typecast_cols: typecasting by name works.", {
+test_that("df_typecast_list: typecasting by name works.", {
 
   testdat <- data.frame(
     a = factor(c(6,5,3,4,5)),
@@ -31,7 +31,7 @@ test_that("df_typecast_cols: typecasting by name works.", {
 
 
   # With list of col types
-  res <- df_typecast_cols(testdat, list(
+  res <- df_typecast_list(testdat, list(
     a = "numeric",
     b = "character",
     c = "factor",
@@ -76,7 +76,7 @@ test_that("df_typecast_cols: typecasting by name works.", {
   )
 
   conv = list(a = "integer")
-  expect_warning(res <- df_typecast_cols(tdat, conv = conv),
+  expect_warning(res <- df_typecast_list(tdat, conv = conv),
                  "NAs introduced by coercion")
 
   expect_identical(
@@ -90,7 +90,7 @@ test_that("df_typecast_cols: typecasting by name works.", {
 
 
   conv = list(a = "character", b = "numeric", c = "integer")
-  expect_warning(res <- df_typecast_cols(tdat, conv = conv),
+  expect_warning(res <- df_typecast_list(tdat, conv = conv),
                  "Not all columns defined in conv are present in")
 })
 
@@ -122,7 +122,7 @@ test_that("df_typecast works with tabde.", {
   )
 
   conv = list(a = "integer")
-  expect_warning(res <- df_typecast_cols(tdat, conv = conv),
+  expect_warning(res <- df_typecast_list(tdat, conv = conv),
                  "NAs introduced by coercion")
 
   expect_identical(
@@ -136,7 +136,7 @@ test_that("df_typecast works with tabde.", {
 
 
   conv = list(a = "character", b = "numeric", c = "integer")
-  expect_warning(res <- df_typecast_cols(tdat, conv = conv),
+  expect_warning(res <- df_typecast_list(tdat, conv = conv),
                  "Not all columns defined in conv are present in")
 })
 

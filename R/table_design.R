@@ -59,3 +59,11 @@ is_table_design_sql <- function(x){
 is_table_design_fwf <- function(x){
   inherits(x, "table_design_fwf")
 }
+
+
+
+
+has_domains <- function(x){
+  "col_domain" %in% colnames(x)
+}
+

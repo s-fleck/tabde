@@ -77,7 +77,7 @@ test_that("matches_tabde handles NA and #skip gracefully", {
 
 
 
-test_that("matches_tabde used domains", {
+test_that("matches_tabde used values", {
 
   tdat <- data.frame(
     x = c(LETTERS[c(4, 3, 2, 9, 10)]),
@@ -88,22 +88,22 @@ test_that("matches_tabde used domains", {
   td <- tabde(
     col_name = c("x", "y"),
     col_type = c("character", "character"),
-    domain   = c("letters", "letters")
+    col_domain = c("letters", "letters")
   )
 
-  ds <- domains(
+  ds <- values(
     "letters",
     LETTERS
   )
 
   expect_true(matches_tabde(tdat, td))
-  expect_true(matches_tabde(tdat, td, domains = ds))
+  expect_true(matches_tabde(tdat, td, values = ds))
 
   tdat$y <- c("bl", "b2", "b3", "b4", "b5")
-  expect_false(matches_tabde(tdat, td, domains = ds))
+  expect_false(matches_tabde(tdat, td, values = ds))
 
   expect_error(
-    assertthat::assert_that(matches_tabde(tdat, td, domains = ds)),
+    assertthat::assert_that(matches_tabde(tdat, td, values = ds)),
     "not in domain"
   )
 })
