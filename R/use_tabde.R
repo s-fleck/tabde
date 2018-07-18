@@ -13,9 +13,12 @@
 #'
 use_tabde <- function(
   x,
-  file = if (assert_namespace("rprojroot")) rprojroot::find_package_root_file(
-    "inst", "table_design", paste0(deparse(substitute(x)), ".csv")
-  ),
+  file = {
+    if (assert_namespace("rprojroot"))
+      rprojroot::find_package_root_file("inst", "table_design", paste0(deparse(substitute(x)), ".csv"))
+    else
+      stop("argument 'file' is missing")
+  },
   overwrite = FALSE
 ){
   use_tabde_internal(
@@ -33,9 +36,12 @@ use_tabde <- function(
 #' @export
 use_tabde_fwf<- function(
   x,
-  file = if (assert_namespace("rprojroot")) rprojroot::find_package_root_file(
-    "inst", "table_design", paste0(deparse(substitute(x)), ".csv")
-  ),
+  file = {
+    if (assert_namespace("rprojroot"))
+      rprojroot::find_package_root_file("inst", "table_design", paste0(deparse(substitute(x)), ".csv"))
+    else
+      stop("argument 'file' is missing")
+  },
   overwrite = FALSE
 ){
   use_tabde_internal(
@@ -53,9 +59,12 @@ use_tabde_fwf<- function(
 #' @export
 use_tabde_sql <- function(
   x,
-  file = if (assert_namespace("rprojroot")) rprojroot::find_package_root_file(
-    "inst", "table_design", paste0(deparse(substitute(x)), ".csv")
-  ),
+  file = {
+    if (assert_namespace("rprojroot"))
+      rprojroot::find_package_root_file("inst", "table_design", paste0(deparse(substitute(x)), ".csv"))
+    else
+      stop("argument 'file' is missing")
+  },
   overwrite = FALSE
 ){
   use_tabde_internal(
@@ -77,7 +86,7 @@ use_tabde_internal <- function(
 ){
   assert_namespace("rprojroot")
   stopifnot(is_scalar_character(file))
-  stopifnot(is_scalar_logical(file))
+  stopifnot(is_scalar_logical(overwrite))
   stopifnot(is.function(fun))
 
 
