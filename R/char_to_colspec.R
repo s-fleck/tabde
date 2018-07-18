@@ -11,16 +11,16 @@
 #' char_to_colspec(c("integer", "logical", "numeric"))
 #' }
 #'
-as_colspec <- function(x){
+as_col_spec <- function(x){
   assert_namespace("readr")
-  UseMethod("as_colspec")
+  UseMethod("as_col_spec")
 }
 
 
 
 
 #' @export
-as_colspec.character <- function(x){
+as_col_spec.character <- function(x){
   assert_namespace("readr")
 
   y <- vector("list", length(x))
