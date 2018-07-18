@@ -65,7 +65,10 @@ matches_tabde <- function(
 
     # domains
     if (!is.null(values)){
-      for (nm in names(x)) {
+
+      cols_to_check <- table_design[!is.na(table_design$col_domain), ]$col_name
+
+      for (nm in cols_to_check) {
         dom  <- table_design[table_design$col_name == nm, "col_domain"]
         vals <- values[values$domain == dom, ]$value
         if (!all(x[[nm]] %in% vals)) return(FALSE)
