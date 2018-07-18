@@ -1,4 +1,4 @@
-# sfmisc utils 0.0.1.9002
+# sfmisc utils 0.0.1.9006
 
 
 
@@ -88,11 +88,9 @@ condition <- function(subclass, message, call = sys.call(-1), ...) {
 
 
 
-#' @export
-#' @rdname condition
 error <- function(subclass, message, call = sys.call(-1), ...) {
   structure(
-    class = c(subclass, "error", 'condition'),
+    class = c(subclass, "error", "condition"),
     list(message = message, call = call, ...)
   )
 }
@@ -156,3 +154,108 @@ is_empty <- function(x){
 is_blank <- function(x){
   trimws(x) == ""
 }
+
+
+
+# all_are -----------------------------------------------------------------
+
+
+#' Test if all elements of a vector are identical
+#'
+#' @param x any object that can be handled by [unique()] (usually a vector or
+#'   list)
+#' @param empty_value Value to return if function is called on a vector of
+#'   length 0 (e.g. `NULL`, `numeric()`, ...)
+#'
+#' @noRd
+#' @family special equality checks
+#' @return `TRUE/FALSE`
+#'
+#' @examples
+#'
+#' all_are_identical(c(1,2,3))
+#' all_are_identical(c(1,1,1))
+#'
+all_are_identical <- function(x, empty_value = FALSE) {
+  assert_that(length(empty_value) <= 1)
+
+  if (length(x) > 0L) {
+    return(identical(length(unique(x)), 1L))
+
+  } else {
+
+    if (is.null(x)){
+      warning("'x' is NULL")
+    } else {
+      warning("'x' is an empty vector")
+    }
+
+    return(empty_value)
+  }
+}
+
+
+
+
+#' Test if all elements of a vector are unique
+#'
+#' @inheritParams all_are_identical
+#'
+#' @return TRUE/FALSE
+#'
+#' @noRd
+#' @family special equality checks
+#'
+#' @examples
+#'
+#' all_are_identical(c(1,2,3))
+#' all_are_identical(c(1,1,1))
+#'
+all_are_distinct <- function(
+  x,
+  empty_value = FALSE
+){
+  assert_that(length(empty_value) <= 1)
+
+  if (identical(length(x), 1L)) {
+    return(TRUE)
+
+  } else if (length(x) > 1L) {
+    return(identical(length(unique(x)), length(x)))
+
+  } else {
+
+    if (is.null(x)){
+      warning("'x' is NULL")
+    } else {
+      warning("'x' is an empty vector")
+    }
+
+    return(empty_value)
+  }
+}
+
+
+
+assert <- function(
+  cond, 
+  ..., 
+  call. = FALSE, 
+  domain = NULL
+){
+  if (identical(cond, TRUE)){
+    return(TRUE)
+  } else if (identical(cond, FALSE)){
+    if (identical(length(list(...)), 0L)){
+      msg <- paste0("`", deparse(match.call()[[2]]), "`", " is not 'TRUE'")
+      stop(msg, call. = call., domain = domain)  
+    } else {
+      stop(..., call. = call., domain = domain)  
+    }
+    
+  } else {
+    stop("Assertion must be either 'TRUE' or 'FALSE'")
+  }
+}
+
+
