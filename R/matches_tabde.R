@@ -34,7 +34,7 @@ matches_tabde <- function(
   values = NULL
 ){
   # precondtions
-    stopifnot(is_table_design(table_design))
+    assert(is_table_design(table_design))
 
     if (!is.null(values)){
       if (!is_tabde_values(values)){

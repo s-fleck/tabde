@@ -37,7 +37,7 @@ as_col_spec.character <- function(x){
   y[x == "time"]      <- list(readr::col_time())
 
 
-  stopifnot(!any(vapply(y, is.null, FALSE)))
+  assert(!any(vapply(y, is.null, FALSE)))
 
   do.call(readr::cols, y)
 }

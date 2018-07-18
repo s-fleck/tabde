@@ -47,7 +47,7 @@ read_tabde <- function(file){
 #'
 read_tabde_sql <- function(file){
   res <- read_tabde(file)
-  stopifnot(is_table_design_sql(res))
+  assert(is_table_design_sql(res))
   res
 }
 
@@ -59,7 +59,7 @@ read_tabde_sql <- function(file){
 #'
 read_tabde_fwf <- function(file){
   res <- read_tabde(file)
-  stopifnot(is_table_design_fwf(res))
+  assert(is_table_design_fwf(res))
   res
 }
 
@@ -83,9 +83,9 @@ write_tabde <- function(
   file,
   overwrite = FALSE
 ){
-  stopifnot(is_table_design(x))
-  stopifnot(is.data.frame(x))
-  stopifnot(is_scalar_logical(overwrite))
+  assert(is_table_design(x))
+  assert(is.data.frame(x))
+  assert(is_scalar_logical(overwrite))
 
   if (!overwrite & file.exists(file)){
     stop("'", file, "' exists.")

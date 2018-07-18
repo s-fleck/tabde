@@ -85,9 +85,9 @@ use_tabde_internal <- function(
   fun
 ){
   assert_namespace("rprojroot")
-  stopifnot(is_scalar_character(file))
-  stopifnot(is_scalar_logical(overwrite))
-  stopifnot(is.function(fun))
+  assert(is_scalar_character(file))
+  assert(is_scalar_logical(overwrite))
+  assert(is.function(fun))
 
 
   if (!is_table_design(x)){

@@ -47,8 +47,8 @@ df_typecast <- function(
   table_design,
   silent = FALSE
 ){
-  stopifnot(is.list(x))
-  stopifnot(is_table_design(table_design))
+  assert(is.list(x))
+  assert(is_table_design(table_design))
 
   df_typecast_list(
     x,

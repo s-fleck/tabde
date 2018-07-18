@@ -15,7 +15,7 @@
 #' get_tabde_sql(iris)
 #' get_tabde_fwf(iris)
 get_tabde <- function(x){
-  stopifnot(is.data.frame(x))
+  assert(is.data.frame(x))
 
   tabde(
     col_name = names(x),
@@ -28,7 +28,7 @@ get_tabde <- function(x){
 
 #' @rdname get_tabde
 get_tabde_sql <- function(x){
-  stopifnot(is.data.frame(x))
+  assert(is.data.frame(x))
 
   tabde_sql(
     col_name = names(x),
@@ -41,7 +41,7 @@ get_tabde_sql <- function(x){
 
 #' @rdname get_tabde
 get_tabde_fwf <- function(x){
-  stopifnot(is.data.frame(x))
+  assert(is.data.frame(x))
 
   tabde_fwf(
     col_name = names(x),

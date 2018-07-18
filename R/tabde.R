@@ -34,7 +34,7 @@ tabde <- function(
   ...
 ){
   if (is.null(col_domain)){
-    stopifnot(do.call(
+    assert(do.call(
       is_equal_length,
       c(list(col_name, col_type), list(...))
     ))
@@ -47,7 +47,7 @@ tabde <- function(
       row.names = NULL
     )
   } else {
-    stopifnot(do.call(
+    assert(do.call(
       is_equal_length,
       c(list(col_name, col_type, col_domain), list(...))
     ))

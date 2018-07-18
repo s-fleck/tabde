@@ -39,8 +39,8 @@ values <- function(
   domain,
   value
 ){
-  stopifnot(is.atomic(domain))
-  stopifnot(is.atomic(value))
+  assert(is.atomic(domain))
+  assert(is.atomic(value))
 
   res <- structure(
     data.frame(

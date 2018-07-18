@@ -37,7 +37,7 @@ as_sql.table_design_sql <- function(
   tname,
   ...
 ){
-  stopifnot(is_scalar_character(tname))
+  assert(is_scalar_character(tname))
   generate_sql_create_table(
     tname = tname,
     col_names = x$col_name,
@@ -81,12 +81,12 @@ generate_sql_create_table <- function(
   sql_opts = rep("", length(col_names))
 ){
   # preconditions
-  stopifnot(is_scalar_character(tname))
-  stopifnot(is.character(col_names))
-  stopifnot(is.character(col_types))
-  stopifnot(is_equal_length(col_names, col_types, sql_opts))
+  assert(is_scalar_character(tname))
+  assert(is.character(col_names))
+  assert(is.character(col_types))
+  assert(is_equal_length(col_names, col_types, sql_opts))
 
-  stopifnot(all(
+  assert(all(
     is.na(col_names) == FALSE |
     is.na(col_names) == is.na(col_types)
   ))

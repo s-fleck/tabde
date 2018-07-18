@@ -26,7 +26,7 @@ walk <- function(.x, .f, ...){
 # assertions --------------------------------------------------------------
 
 assert_namespace <- function(x){
-  stopifnot(requireNamespace(x, quietly = TRUE))
+  assert(requireNamespace(x, quietly = TRUE))
   invisible(TRUE)
 }
 
