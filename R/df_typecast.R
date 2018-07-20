@@ -180,7 +180,6 @@ typecast_factory <- function(x){
     x,
     "logical"   = as.logical,
     "integer"   = as.integer,
-    "integer64" = as.integer64,
     "factor"    = as.factor,
     "numeric"   = as.numeric,
     "character" = as.character,
