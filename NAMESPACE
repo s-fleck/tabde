@@ -2,11 +2,12 @@
 
 S3method(as_col_spec,character)
 S3method(as_sql,table_design_sql)
+S3method(df_typecast_list,data.frame)
+S3method(df_typecast_list,data.table)
 export(as_col_spec)
 export(as_sql)
 export(df_typecast)
 export(df_typecast_list)
-export(error)
 export(generate_sql_create_table)
 export(get_tabde)
 export(is_table_design)

@@ -171,8 +171,10 @@ typecast_factory <- function(x){
 
   msg <- paste(
     "Input must be any of 'numeric', integer', 'factor'",
-    "'character', 'POSIXct', 'integer64', 'Date', but is", x
+    "'character', 'POSIXct', 'integer64', 'Date', but is '", x, "'"
   )
+
+  if (x == "" || is.na(x)) return(identity)
 
   res <- switch(
     x,
