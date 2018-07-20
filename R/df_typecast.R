@@ -63,13 +63,20 @@ df_typecast <- function(
 
 
 
-
-
 #' @param conv a list of the form list(colname = "coltype")
 #' @rdname df_typecast
 #' @export
 #'
-df_typecast_list <-  function(
+df_typecast_list <- function(x, conv, silent){
+  UseMethod("df_typecast_list")
+}
+
+
+
+
+#' @export
+#'
+df_typecast_list.data.frame <-  function(
   x,
   conv = list(),
   silent = FALSE
@@ -91,19 +98,7 @@ df_typecast_list <-  function(
     f <- typecast_factory(toclass)
 
     if (any(class(x[[i]]) != toclass)) {
-
-      x[[i]] <- tryCatch(
-        f(x[[i]]),
-        warning = function(w) {
-          warning(typecast_produces_na_warning(
-            i,
-            class(x[[i]]),
-            toclass,
-            w$message
-          ))
-          suppressWarnings(f(x[[i]]))
-        }
-      )
+      x[[i]] <- apply_with_typecast_warning(x[[i]], f, i, toclass)
     }
   }
 
@@ -112,6 +107,63 @@ df_typecast_list <-  function(
 
 
 
+
+#' @export
+#'
+df_typecast_list.data.table <-  function(
+  x,
+  conv = list(),
+  silent = FALSE
+){
+  assert_namespace("data.table")
+  x <- data.table::copy(x)
+
+  conv2 <- conv[names(conv) %in% names(x)]
+
+  if ( (length(conv2) < length(conv)) && !silent) {
+    missing_cols <- names(conv)[!names(conv) %in% names(conv2)]
+    warning(defined_column_is_missing_warning(missing_cols))
+  }
+
+  for (cn in names(conv2)){
+    toclass <- conv2[[cn]]
+
+    if ("POSIXct" %in% toclass){
+      toclass <- "POSIXct"
+    }
+
+    f <- typecast_factory(toclass)
+
+    if (any(class(x[[cn]]) != toclass)) {
+      data.table::set(x, j = cn, value = apply_with_typecast_warning(x[[cn]], f, cn, toclass))
+    }
+  }
+
+  x
+}
+
+
+
+
+apply_with_typecast_warning <- function(
+  .x,
+  .f,
+  .colname,
+  .toclass
+){
+  tryCatch(
+    .f(.x),
+    warning = function(w) {
+      warning(typecast_produces_na_warning(
+        .colname,
+        class(.x),
+        .toclass,
+        w$message
+      ))
+      suppressWarnings(.f(.x))
+    }
+  )
+}
 
 # utils -------------------------------------------------------------------
 
@@ -125,10 +177,10 @@ typecast_factory <- function(x){
   res <- switch(
     x,
     "logical"   = as.logical,
-    "integer"   = as.integer2,
-    "integer64" = as.integer642,
+    "integer"   = as.integer,
+    "integer64" = as.integer64,
     "factor"    = as.factor,
-    "numeric"   = as.numeric2,
+    "numeric"   = as.numeric,
     "character" = as.character,
     "POSIXct"   = as.POSIXct,
     "Date"      = as.Date,
@@ -137,26 +189,6 @@ typecast_factory <- function(x){
   return(res)
 }
 
-
-
-
-as.numeric2   <- function(x) as.numeric(as.character(x))
-
-
-
-
-as.integer2   <- function(x) as.integer(as.character(x))
-
-
-
-
-as.integer642 <- function(x) {
-  if (requireNamespace("bit64")){
-    bit64::as.integer64(as.character(x))
-  } else {
-    stop("Requires the package bit64")
-  }
-}
 
 
 
