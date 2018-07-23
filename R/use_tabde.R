@@ -1,12 +1,21 @@
-#' Create table design file
+#' Use table design file
 #'
-#' `use_tabde()` is designed for use during package development.
-#' If `x` is a `table_design()` it saves it directly to `inst/table_design/`.
-#' If `x` is a normal `data.frame` it converts it to a `table_design`
-#' via [get_tabde()] and then saves it.
+#'
+#' @description
+#'
+#' `use_tabde()` is designed to be used during package development. It saves
+#' `table_designs` to the `inst/table_design/` folder of the current
+#' package (and creates this folder if it doesnt exist).
 #'
 #' `use_tabde_fwf()` and `use_tabde_sql()` are convenince functions that do the
-#' same, but in addition add the respective dummy columns.
+#' same and add the respective dummy columns.
+#'
+#' @param x a [`table_design`] or a regular `data.frame`. Regular `data.frames`
+#'   are  converted to `table_designs` via [get_tabde()].
+#' @param file scalar `character`. name for the table_design `.csv` file. The
+#'   default is to construct a filename from the name of the object passed to
+#'   `x`.
+#' @param overwrite `logical` scalar. Set `TRUE` to overwrite existing files.
 #'
 #' @rdname use_tabde
 #' @export

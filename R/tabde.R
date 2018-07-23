@@ -10,7 +10,7 @@
 #' @param col_type `character` vector. Valid `data.frame` column types. `NA`s
 #'   and the string `"#skip"` have special meanings.
 #'
-#'   `NA`s will be converted to `readr::col_guess()` by [as_colspec()] and
+#'   `NA`s will be converted to `readr::col_guess()` by [as_col_spec()] and
 #'   [matches_tabde()] will not check the classes of `NA` columns. In a similar
 #'   fashion `#skip` columns will be convertet to `readr::col_skip()` and
 #'   `matches_tabde` will not check if they are present in `dat` or not.

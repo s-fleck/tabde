@@ -11,7 +11,9 @@
 #' @param table_design a [table_design]
 #' @param skip `character` vector. Columns where the `col_type` in
 #'   `table_design` matches any of the strings in `skip` will not be checked.
-#'   see also [as_colspec()].
+#'   see also [as_col_spec()]
+#' @param values a [values] Object. If `x` contains a `col_domain` column,
+#'   valid values for each domain are looked up in `values`
 #'
 #' @return `logical`
 #' @export

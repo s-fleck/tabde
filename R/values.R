@@ -62,8 +62,8 @@ values <- function(
 
 
 
-as_domains <- function(x){
-  domains(x$domain, x$value)
+as_values <- function(x){
+  values(x$domain, x$value)
 }
 
 

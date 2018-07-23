@@ -26,6 +26,7 @@ get_tabde <- function(x){
 
 
 
+#' @export
 #' @rdname get_tabde
 get_tabde_sql <- function(x){
   assert(is.data.frame(x))
@@ -39,6 +40,7 @@ get_tabde_sql <- function(x){
 
 
 
+#' @export
 #' @rdname get_tabde
 get_tabde_fwf <- function(x){
   assert(is.data.frame(x))
