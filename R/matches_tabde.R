@@ -95,7 +95,6 @@ attr(matches_tabde, "fail") <- function(call, env){
     "'%s' does not match table design:", xname
   )
 
-
   if (
     setequal(names(x), table_design$col_name) &&
     !identical(names(x), table_design$col_name)
@@ -151,9 +150,10 @@ attr(matches_tabde, "fail") <- function(call, env){
 
   if (!is.null(values) && has_domains(table_design)){
     for (nm in names(x)) {
-      dom  <- table_design[table_design$col_name == "x", "col_domain"]
+      dom  <- table_design[table_design$col_name == nm, "col_domain"]
       vals <- values[values$domain == dom, ]$value
-      if (!all(x[[nm]] %in% vals)) {
+
+      if (!is.na(dom) && !all(x[[nm]] %in% vals)) {
         msg[["dom"]] <- sprintf(
           "- column %s: values %s not in domain '%s'",
           nm,

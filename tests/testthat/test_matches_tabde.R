@@ -77,7 +77,7 @@ test_that("matches_tabde handles NA and #skip gracefully", {
 
 
 
-test_that("matches_tabde used values", {
+test_that("matches_tabde uses values", {
 
   tdat <- data.frame(
     x = c(LETTERS[c(4, 3, 2, 9, 10)]),
@@ -106,8 +106,7 @@ test_that("matches_tabde used values", {
     assertthat::assert_that(matches_tabde(tdat, td, values = ds)),
     "not in domain"
   )
+
+  # NA domains are skipped
+  expect_true(matches_tabde(tdat, td))
 })
-
-
-
-
