@@ -1,4 +1,22 @@
-table_design <- function(x){
+#' Title
+#'
+#' @param x
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'
+as_table_design <- function(x){
+  UseMethod("as_table_design")
+}
+
+
+
+
+#' @export
+#'
+as_table_design.data.frame <- function(x){
   assert(all(c("col_name", "col_type") %in% names(x)))
   assert(is.character(x$col_name))
   assert(is.character(x$col_type))
@@ -13,9 +31,26 @@ table_design <- function(x){
 
 
 
-table_design_fwf <- function(x){
+#' @export
+#'
+as_table_design_fwf <- function(x){
+  UseMethod("as_table_design_fwf")
+}
+
+
+
+
+#' Title
+#'
+#' @param x
+#'
+#' @return
+#' @export
+#'
+#' @examples
+as_table_design_fwf.data.frame <- function(x){
   assert(all(c("fwf_start", "fwf_end") %in% names(x)))
-  x <- table_design(x)
+  x <- as_table_design(x)
   class(x) <- union("table_design_fwf", class(x))
   x
 }
@@ -23,9 +58,26 @@ table_design_fwf <- function(x){
 
 
 
-table_design_sql <- function(x){
+#' @export
+#'
+as_table_design_sql <- function(x){
+  UseMethod("as_table_design_sql")
+}
+
+
+
+
+#' Title
+#'
+#' @param x
+#'
+#' @return
+#' @export
+#'
+#' @examples
+as_table_design_sql.data.frame <- function(x){
   assert(all(c("sql_type", "sql_opts") %in% names(x)))
-  x <- table_design(x)
+  x <- as_table_design(x)
   class(x) <- union("table_design_sql", class(x))
   x
 }
@@ -66,4 +118,3 @@ is_table_design_fwf <- function(x){
 has_domains <- function(x){
   "col_domain" %in% colnames(x)
 }
-

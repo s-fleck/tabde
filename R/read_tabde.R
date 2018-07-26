@@ -23,14 +23,14 @@ read_tabde <- function(file){
     )
   )
 
-  res <- table_design(res)
+  res <- as_table_design(res)
 
   if ("fwf_start" %in% names(res)){
-    res <- table_design_fwf(res)
+    res <- as_table_design_fwf(res)
   }
 
   if ("sql_type" %in% names(res)){
-    res <- table_design_sql(res)
+    res <- as_table_design_sql(res)
   }
 
   res

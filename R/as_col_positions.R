@@ -1,11 +1,13 @@
-#' Title
+#' Convert table_design_fwf to col_positions for readr
 #'
-#' @param x
+#' Convert [`table_desing_fwf`] objects to lists that can be used as
+#' `col_positons` argument to [readr::read_fwf()]
 #'
-#' @return
+#' @param x a `table_design_fwf` object.
+#'
+#' @return a `list` with columns `start`, `end`, `col_names`.
 #' @export
 #'
-#' @examples
 as_col_positions <- function(x){
   UseMethod("as_col_positions")
 }
@@ -13,14 +15,9 @@ as_col_positions <- function(x){
 
 
 
-#' Title
-#'
-#' @param x
-#'
-#' @return
+#' @rdname as_col_positions
+#' @return a `list` with columns `start`, `end`, `col_names`
 #' @export
-#'
-#' @examples
 as_col_positions.table_design_fwf <- function(x){
   list(
     begin = x$fwf_start,

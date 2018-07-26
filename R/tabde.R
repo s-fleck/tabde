@@ -63,7 +63,7 @@ tabde <- function(
   }
 
 
-  table_design(res)
+  as_table_design(res)
 }
 
 
@@ -91,7 +91,7 @@ tabde_fwf <- function(
     ...
   )
 
-  table_design_fwf(res)
+  as_table_design_fwf(res)
 }
 
 
@@ -121,5 +121,5 @@ tabde_sql <- function(
     ...
   )
 
-  table_design_sql(res)
+  as_table_design_sql(res)
 }
