@@ -1,11 +1,10 @@
-#' Title
+#' Coerce object to table_design
 #'
-#' @param x
+#' @param x any \R object
 #'
-#' @return
+#' @return a `table_design` object of the appropriate subclass
 #' @export
 #'
-#' @examples
 #'
 as_table_design <- function(x){
   UseMethod("as_table_design")
@@ -13,7 +12,7 @@ as_table_design <- function(x){
 
 
 
-
+#' @rdname as_table_design
 #' @export
 #'
 as_table_design.data.frame <- function(x){
@@ -30,7 +29,7 @@ as_table_design.data.frame <- function(x){
 
 
 
-
+#' @rdname as_table_design
 #' @export
 #'
 as_table_design_fwf <- function(x){
@@ -40,14 +39,9 @@ as_table_design_fwf <- function(x){
 
 
 
-#' Title
-#'
-#' @param x
-#'
-#' @return
+#' @inheritParams as_table_design
 #' @export
 #'
-#' @examples
 as_table_design_fwf.data.frame <- function(x){
   assert(all(c("fwf_start", "fwf_end") %in% names(x)))
   x <- as_table_design(x)
@@ -58,6 +52,7 @@ as_table_design_fwf.data.frame <- function(x){
 
 
 
+#' @rdname as_table_design
 #' @export
 #'
 as_table_design_sql <- function(x){
@@ -67,14 +62,8 @@ as_table_design_sql <- function(x){
 
 
 
-#' Title
-#'
-#' @param x
-#'
-#' @return
+#' @inheritParams as_table_design
 #' @export
-#'
-#' @examples
 as_table_design_sql.data.frame <- function(x){
   assert(all(c("sql_type", "sql_opts") %in% names(x)))
   x <- as_table_design(x)
@@ -85,8 +74,7 @@ as_table_design_sql.data.frame <- function(x){
 
 
 
-#' @param x any \R Object
-#' @rdname tabde
+#' @rdname as_table_design
 #' @export
 is_table_design <- function(x){
   inherits(x, "table_design")
@@ -95,9 +83,8 @@ is_table_design <- function(x){
 
 
 
-#' @rdname tabde
+#' @rdname as_table_design
 #' @export
-#'
 is_table_design_sql <- function(x){
   inherits(x, "table_design_sql")
 }
@@ -105,7 +92,7 @@ is_table_design_sql <- function(x){
 
 
 
-#' @rdname tabde
+#' @rdname as_table_design
 #' @export
 #'
 is_table_design_fwf <- function(x){

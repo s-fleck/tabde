@@ -1,6 +1,6 @@
 #' Convert table_design_fwf to col_positions for readr
 #'
-#' Convert [`table_desing_fwf`] objects to lists that can be used as
+#' Convert [`table_design_fwf`] objects to lists that can be used as
 #' `col_positons` argument to [readr::read_fwf()]
 #'
 #' @param x a `table_design_fwf` object.
