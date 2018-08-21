@@ -4,7 +4,7 @@
 #' `col.names` and `colClasses` paramters from a table design.
 #'
 #' @inheritParams data.table::fread
-#' @param table_design
+#' @param table_design a [table_design]
 #' @param ... passed on to [data.table::fread()]
 #' @inherit data.table::fread return
 #'
