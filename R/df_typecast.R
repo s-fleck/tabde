@@ -128,15 +128,23 @@ df_typecast_list.data.table <-  function(
   for (cn in names(conv2)){
     toclass <- conv2[[cn]]
 
-    if ("POSIXct" %in% toclass){
+    if (is.na(toclass) || is_blank(toclass))
+      next
+
+    else if ("POSIXct" %in% toclass)
       toclass <- "POSIXct"
-    }
 
-    f <- typecast_factory(toclass)
-
-    if (any(class(x[[cn]]) != toclass)) {
-      data.table::set(x, j = cn, value = apply_with_typecast_warning(x[[cn]], f, cn, toclass))
-    }
+    else if (any(class(x[[cn]]) != toclass))
+      data.table::set(
+        x,
+        j = cn,
+        value = apply_with_typecast_warning(
+          x[[cn]],
+          typecast_factory(toclass),
+          cn,
+          toclass
+        )
+      )
   }
 
   x
@@ -168,15 +176,15 @@ apply_with_typecast_warning <- function(
 # utils -------------------------------------------------------------------
 
 typecast_factory <- function(x){
-
   msg <- paste(
     "Input must be any of 'numeric', integer', 'factor'",
     "'character', 'POSIXct', 'integer64', 'Date', but is '", x, "'"
   )
 
-  if (x == "" || is.na(x)) return(identity)
+  if (is.na(x) || x == "")
+    return(identity)
 
-  res <- switch(
+  switch(
     x,
     "logical"   = as.logical,
     "integer"   = as.integer,
@@ -187,7 +195,6 @@ typecast_factory <- function(x){
     "Date"      = as.Date,
     stop(msg)
   )
-  return(res)
 }
 
 
