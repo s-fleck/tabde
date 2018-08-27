@@ -17,6 +17,7 @@ read_tabde <- function(file){
     header = TRUE,
     row.names = NULL,
     stringsAsFactors = FALSE,
+    na.strings = c("NA", ""),
     colClasses = c(
       col_name = "character",
       col_type = "character"
