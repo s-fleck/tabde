@@ -81,17 +81,19 @@ generate_sql_create_table <- function(
   sql_opts = rep("", length(col_names))
 ){
   # preconditions
-  assert(is_scalar_character(tname))
-  assert(is.character(col_names))
-  assert(is.character(col_types))
-  assert(is_equal_length(col_names, col_types, sql_opts))
+  stopifnot(
+    is_scalar_character(tname),
+    is.character(col_names),
+    is.character(col_types),
+    is_equal_length(col_names, col_types, sql_opts)
+  )
 
   assert(all(
     is.na(col_names) == FALSE |
     is.na(col_names) == is.na(col_types)
   ))
 
-
+  sql_opts[is.na(sql_opts)] <- ""
   col_types  <- toupper(col_types)
 
 
