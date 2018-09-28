@@ -1,11 +1,13 @@
 Type: Package
 Package: tabde
-Title: Work with table designs
-Version: 0.0.1.9012
+Title: Define and Check The Structure of Data Frames and Database Tables
+Version: 0.0.1.9013
 Authors@R: person("Stefan", "Fleck", email = "stefan.b.fleck@gmail.com", role = c("aut", "cre"))
 Maintainer: Stefan Fleck <stefan.b.fleck@gmail.com>
-Description: 
-  A package to work with table design (col_names, col_types) in csv format.
+Description:
+    Define the structure (column names and types) of tables and save them as csv 
+    files. Tools are provided to use such table design to create database 
+    tables, read fwf and csv files, and check data.frames for validity.
 License: MIT + file LICENSE
 Imports: 
     utils
