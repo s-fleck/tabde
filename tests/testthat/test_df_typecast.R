@@ -56,7 +56,7 @@ test_that("df_typecast_list: typecasting by name works.", {
 
 
   # With table design
-  td <- tabde::tabde(
+  td <- tabde(
     col_name = c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"),
     col_type = c("numeric", "character", "factor", "factor", "integer", "factor", "logical", "integer", "character", "POSIXct")
   )
@@ -152,7 +152,7 @@ test_that("df_typecast_list.data.table: typecasting by name works.", {
 
 
   # With table design
-  td <- tabde::tabde(
+  td <- tabde(
     col_name = c("a", "b", "c", "d", "e", "f", "g", "h", "i", "j"),
     col_type = c("numeric", "character", "factor", "factor", "integer", "factor", "logical", "integer", "character", "POSIXct")
   )

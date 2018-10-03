@@ -1,4 +1,4 @@
-# sfmisc utils 0.0.1.9007
+# sfmisc utils 0.0.1.9011
 
 
 
@@ -25,11 +25,60 @@ walk <- function(.x, .f, ...){
 
 # assertions --------------------------------------------------------------
 
-assert_namespace <- function(x){
-  stopifnot(requireNamespace(x, quietly = TRUE))
-  invisible(TRUE)
+#' Assert a condition
+#'
+#' A simpler and more efficient for [base::stopifnot()] that has an easy
+#' mechanism for supplying custom error messages. As opposed to `stopifnot()`,
+#' `assert()` only works with a single (scalar) assertions.
+#'
+#' @param cond `TRUE` or `FALSE` (without any attributes). `FALSE` will throw
+#'   an exception with an automatically constructed error message (if `...`
+#'   was not supplied). Anything else will throw an exception stating that
+#'   `cond` was not valid.
+#' @param ... passed on to [stop()]
+#' @param call. passed on to [stop()]
+#' @param domain passed on to [stop()]
+#'
+#' @noRd
+#'
+#' @return TRUE on success
+#'
+#' @examples
+#'
+#' \dontrun{
+#' assert(1 == 1)
+#' assert(1 == 2)
+#' }
+#'
+#'
+assert <- function(
+  cond,
+  ...,
+  call. = FALSE,
+  domain = NULL
+){
+  if (identical(cond, TRUE)){
+    return(TRUE)
+  } else if (identical(cond, FALSE)){
+    if (identical(length(list(...)), 0L)){
+      msg <- paste0("`", deparse(match.call()[[2]]), "`", " is not 'TRUE'")
+      stop(msg, call. = call., domain = domain)
+    } else {
+      suppressWarnings( stop(..., call. = call., domain = domain) )
+    }
+
+  } else {
+    stop("Assertion must be either 'TRUE' or 'FALSE'")
+  }
 }
 
+
+
+
+assert_namespace <- function(x){
+  assert(requireNamespace(x, quietly = TRUE))
+  invisible(TRUE)
+}
 
 
 
@@ -95,7 +144,16 @@ error <- function(subclass, message, call = sys.call(-1), ...) {
   )
 }
 
+
+
+
 # predicates --------------------------------------------------------------
+is_scalar <- function(x){
+  identical(length(x), 1L)
+}
+
+
+
 
 is_scalar_character <- function(x){
   is.character(x) && is_scalar(x)
@@ -118,8 +176,15 @@ is_scalar_integerish <- function(x){
 
 
 
-is_scalar <- function(x){
-  identical(length(x), 1L)
+is_tf <- function(x){
+  is.logical(x) && !anyNA(x)
+}
+
+
+
+
+is_scalar_tf <- function(x){
+  identical(x, TRUE) || identical(x, FALSE)
 }
 
 
@@ -154,6 +219,7 @@ is_empty <- function(x){
 is_blank <- function(x){
   trimws(x) == ""
 }
+
 
 
 
@@ -238,51 +304,6 @@ all_are_distinct <- function(
 
 
 
-#' Assert a condition
-#'
-#' A simpler and more efficient for [base::stopifnot()] that has an easy
-#' mechanism for supplying custom error messages. As opposed to `stopifnot()`,
-#' `assert()` only works with a single (scalar) assertions.
-#'
-#' @param cond `TRUE` or `FALSE` (without any attributes). `FALSE` will throw
-#'   an exception with an automatically constructed error message (if `...`
-#'   was not supplied). Anything else will throw an exception stating that
-#'   `cond` was not valid.
-#' @param ... passed on to [stop()]
-#' @param call. passed on to [stop()]
-#' @param domain passed on to [stop()]
-#'
-#' @noRd
-#'
-#' @return TRUE on success
-#'
-#' @examples
-#'
-#' \dontrun{
-#' assert(1 == 1)
-#' assert(1 == 2)
-#' }
-#'
-#'
-assert <- function(
-  cond,
-  ...,
-  call. = FALSE,
-  domain = NULL
-){
-  if (identical(cond, TRUE)){
-    return(TRUE)
-  } else if (identical(cond, FALSE)){
-    if (identical(length(list(...)), 0L)){
-      msg <- paste0("`", deparse(match.call()[[2]]), "`", " is not 'TRUE'")
-      stop(msg, call. = call., domain = domain)
-    } else {
-      stop(..., call. = call., domain = domain)
-    }
-
-  } else {
-    stop("Assertion must be either 'TRUE' or 'FALSE'")
-  }
+n_distinct <- function(x){
+  length(unique(x))
 }
-
-
