@@ -57,7 +57,7 @@ matches_tabde <- function(
     stopifnot(
       is_table_design(table_design),
       is_scalar_character(skip),
-      is_scalar_tf(check_nulls)
+      is_scalar_bool(check_nulls)
     )
 
     if (!is.null(values)){

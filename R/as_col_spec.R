@@ -8,7 +8,7 @@
 #' @examples
 #'
 #' \dontrun{
-#' char_to_colspec(c("integer", "logical", "numeric"))
+#' as_col_spec(c("integer", "logical", "numeric"))
 #' }
 #'
 as_col_spec <- function(x){
