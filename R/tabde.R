@@ -32,7 +32,7 @@
 #' @export
 #' @seealso
 #' * validate `data.frames` with [matches_tabde()]
-#' * read files with [td_fread()], [td_read_csv()], [td_read_fwf()]
+#' * read csv files with [td_fread()]
 #' * generate SQL with [as_sql]
 #' * [shed](https://github.com/s-fleck/shed): An experimental csv editor
 #'   implemented in shiny
