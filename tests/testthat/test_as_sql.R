@@ -15,12 +15,23 @@ test_that("generate_sql works as expected", {
     "is_equal_length"
   )
 
-
   ct1[[1]] <- NA
 
-  expect_warning(
+  expect_message(
     generate_sql_create_table("testtable", cn1[1:3], ct1[1:3]),
     "Skipping 1"
+  )
+
+  cn1[[1]] <- NA
+  expect_error(
+    generate_sql_create_table("testtable", cn1[1:3], ct1[1:3]),
+    "must be unique"
+  )
+
+  cn1[[1]] <- "B"
+  expect_error(
+    generate_sql_create_table("testtable", cn1[1:3], ct1[1:3]),
+    "must be unique"
   )
 })
 
