@@ -38,7 +38,7 @@ as_sql.table_design_sql <- function(
   ...
 ){
   assert(is_scalar_character(tname))
-  generate_sql_create_table(
+  sql_create_table(
     tname = tname,
     col_names = x$col_name,
     col_types = x$sql_type,
@@ -51,7 +51,7 @@ as_sql.table_design_sql <- function(
 
 #' Generate SQL CREATE TABLE statements
 #'
-#' Creates SQL CREATE TABLE statements from a vector of column names and
+#' Creates SQL `CREATE TABLE` statements from a vector of column names and
 #' a vector of column types
 #'
 #' @param tname `character` scalar. Name of target sql table
@@ -64,13 +64,13 @@ as_sql.table_design_sql <- function(
 #' @export
 #'
 #' @examples
-#' generate_sql_create_table(
+#' sql_create_table(
 #'   "example.table",
 #'   c("numbers", "animals"),
 #'   c("integer", "varchar(8)"),
 #'   c("NOT NULL", "")
 #' )
-generate_sql_create_table <- function(
+sql_create_table <- function(
   tname,
   col_names,
   col_types,

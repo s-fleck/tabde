@@ -9,28 +9,28 @@ test_that("generate_sql works as expected", {
            "GRAPHIC(80)", "VARGRAPHIC(80)", "DBCLOB(80)", "BLOB(80)", "FAIL")
   co1 <- c(rep("NOT NULL", length(ct1)))
 
-  expect_silent(generate_sql_create_table("testtable", cn1[1:3], ct1[1:3]))
+  expect_silent(sql_create_table("testtable", cn1[1:3], ct1[1:3]))
   expect_error(
-    generate_sql_create_table("testtable", cn1[1:3], ct1[1:2]),
+    sql_create_table("testtable", cn1[1:3], ct1[1:2]),
     "is_equal_length"
   )
 
   ct1[[1]] <- NA
 
   expect_message(
-    generate_sql_create_table("testtable", cn1[1:3], ct1[1:3]),
+    sql_create_table("testtable", cn1[1:3], ct1[1:3]),
     "Skipping 1"
   )
 
   cn1[[1]] <- NA
   expect_error(
-    generate_sql_create_table("testtable", cn1[1:3], ct1[1:3]),
+    sql_create_table("testtable", cn1[1:3], ct1[1:3]),
     "must be unique"
   )
 
   cn1[[1]] <- "B"
   expect_error(
-    generate_sql_create_table("testtable", cn1[1:3], ct1[1:3]),
+    sql_create_table("testtable", cn1[1:3], ct1[1:3]),
     "must be unique"
   )
 })
@@ -49,7 +49,7 @@ test_that("as_sql works as expected", {
 
   expect_identical(
     as_sql(x, "blah.table"),
-    generate_sql_create_table(
+    sql_create_table(
       "blah.table",
       col_names = x$col_name,
       col_types = x$sql_type,
