@@ -1,0 +1,18 @@
+name:
+  schmoo
+primary_key:
+  x_fzgid_pk:
+    fzgid
+foreign_key:
+  x_fzgid_foreign:
+    columns:
+    - fzgid
+    - blah
+    - blubb
+    on_delete: cascade
+    references: blah.table
+  y_fzgid_foreign: [fzgid, blah, blubb]
+index:
+  x_fahrten_fzgstp:
+    table: schwupp
+    columns: [blah, blah, blah]

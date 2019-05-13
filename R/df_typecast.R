@@ -128,6 +128,9 @@ df_typecast_list.data.table <-  function(
   for (cn in names(conv2)){
     toclass <- conv2[[cn]]
 
+    if (length(toclass) > 1)
+      toclass <- toclass[[1]]
+
     if (is.na(toclass) || is_blank(toclass))
       next
 
