@@ -13,7 +13,7 @@ td_fread(input, file, text, cmd, table_design, ...)
 
 \item{text}{ The input data itself as a character vector of one or more lines, for example as returned by \code{readLines()}. }
 
-\item{cmd}{ A shell command that pre-processes the file; e.g. \code{fread(cmd=paste("grep",word,"filename")}. }
+\item{cmd}{ A shell command that pre-processes the file; e.g. \code{fread(cmd=paste("grep",word,"filename")}. See Details. }
 
 \item{table_design}{a \link{table_design}}
 

@@ -4,8 +4,15 @@
 \alias{sql_create_table}
 \title{Generate SQL CREATE TABLE statements}
 \usage{
-sql_create_table(tname, col_names, col_types, sql_opts = rep("",
-  length(col_names)))
+sql_create_table(
+  tname,
+  col_names,
+  col_types,
+  col_opts = rep("", length(col_names)),
+  const_names = NULL,
+  const_types = NULL,
+  const_cols = NULL
+)
 }
 \arguments{
 \item{tname}{\code{character} scalar. Name of target sql table}
@@ -15,13 +22,13 @@ sql_create_table(tname, col_names, col_types, sql_opts = rep("",
 \item{col_types}{\code{character} scalar. Column types of target sql table.
 Columns of type \code{NA} will be skipped}
 
-\item{sql_opts}{column options of target sql table (for example \code{NOT NULL})}
+\item{col_opts}{column options of target sql table (for example \verb{NOT NULL})}
 }
 \value{
-a \code{CREATE TABLE} statement as a \code{character} scalar
+a \verb{CREATE TABLE} statement as a \code{character} scalar
 }
 \description{
-Creates SQL \code{CREATE TABLE} statements from a vector of column names and
+Creates SQL \verb{CREATE TABLE} statements from a vector of column names and
 a vector of column types
 }
 \examples{

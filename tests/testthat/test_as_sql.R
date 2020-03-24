@@ -1,4 +1,4 @@
-context("generate_sql")
+context("as_sql")
 
 
 test_that("generate_sql works as expected", {
@@ -44,7 +44,6 @@ test_that("as_sql works as expected", {
     col_type = c("integer", "integer"),
     sql_type = c("integer", "integer")
   )
-
 
   expect_identical(
     as_sql(x, "blah.table"),
@@ -112,3 +111,32 @@ test_that("sql_create_table works with columns and primary keys", {
   ), "foo")
 })
 
+
+
+
+test_that("as_sql.table_design_sql works as expected with constraints", {
+  x <- tabde_sql(
+    col_name = c("blah", "blubb"),
+    col_type = c("integer", "integer"),
+    sql_opts  = c("", "not null"),
+    sql_type = c("integer", "integer"),
+    .constraints = list(
+      const_names = "X_TEST_PK",
+      const_types = "PRIMARY KEY",
+      const_cols = list(c("blah", "blubb"))
+    )
+  )
+
+  expect_identical(
+    as_sql(x, "test.table"),
+    sql_create_table(
+      "test.table",
+      col_names = c("blah", "blubb"),
+      col_types = c("integer", "integer"),
+      col_opts  = c("", "not null"),
+      const_names = "X_TEST_PK",
+      const_types = "PRIMARY KEY",
+      const_cols = list(c("blah", "blubb"))
+    )
+  )
+})

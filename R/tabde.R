@@ -121,7 +121,8 @@ tabde_sql <- function(
   sql_type = rep(NA_character_, length(col_name)),
   sql_opts = rep(NA_character_, length(col_name)),
   col_domain = NULL,
-  ...
+  ...,
+  .constraints = NULL
 ){
   res <- tabde(
     col_name = col_name,
@@ -132,5 +133,23 @@ tabde_sql <- function(
     ...
   )
 
-  as_table_design_sql(res)
+  as_table_design_sql(res, constraints = .constraints)
+}
+
+
+
+assert_valid_constraints <- function(
+  x
+){
+  assert(
+    all(c("const_names", "const_types", "const_cols") %in% names(x)),
+    "`constraints` must be a named list with the elements `const_names`, `const_types` and `const_cols`"
+  )
+  assert(
+    is.character(x$const_names) &&
+    is.character(x$const_types) &&
+    is.list(x$const_cols) &&
+    is_equal_length(x$const_names, x$const_types, x$const_cols)
+  )
+  TRUE
 }

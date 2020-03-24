@@ -55,7 +55,7 @@ as_table_design_fwf.data.frame <- function(x){
 #' @rdname as_table_design
 #' @export
 #'
-as_table_design_sql <- function(x){
+as_table_design_sql <- function(x, constraints = attr(x, "constraints")){
   UseMethod("as_table_design_sql")
 }
 
@@ -64,10 +64,17 @@ as_table_design_sql <- function(x){
 
 #' @inheritParams as_table_design
 #' @export
-as_table_design_sql.data.frame <- function(x){
+as_table_design_sql.data.frame <- function(
+  x,
+  constraints = attr(x, "constraints")
+){
+  if (!is.null(constraints))
+    assert_valid_constraints(constraints)
+
   assert(all(c("sql_type", "sql_opts") %in% names(x)))
   x <- as_table_design(x)
   class(x) <- union("table_design_sql", class(x))
+  attr(x, "constraints") <- constraints
   x
 }
 

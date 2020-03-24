@@ -6,20 +6,29 @@
 \alias{use_tabde_sql}
 \title{Use table design file}
 \usage{
-use_tabde(x, file = {     if (assert_namespace("rprojroot"))         
-  rprojroot::find_package_root_file("inst", "table_design",
-  paste0(deparse(substitute(x)), ".csv"))     else
-  stop("argument 'file' is missing") }, overwrite = FALSE)
+use_tabde(
+  x,
+  file = {     if (assert_namespace("rprojroot"))         
+    rprojroot::find_package_root_file("inst", "table_design",
+    paste0(deparse(substitute(x)), ".csv"))     else stop("argument 'file' is missing") },
+  overwrite = FALSE
+)
 
-use_tabde_fwf(x, file = {     if (assert_namespace("rprojroot"))         
-  rprojroot::find_package_root_file("inst", "table_design",
-  paste0(deparse(substitute(x)), ".csv"))     else
-  stop("argument 'file' is missing") }, overwrite = FALSE)
+use_tabde_fwf(
+  x,
+  file = {     if (assert_namespace("rprojroot"))         
+    rprojroot::find_package_root_file("inst", "table_design",
+    paste0(deparse(substitute(x)), ".csv"))     else stop("argument 'file' is missing") },
+  overwrite = FALSE
+)
 
-use_tabde_sql(x, file = {     if (assert_namespace("rprojroot"))         
-  rprojroot::find_package_root_file("inst", "table_design",
-  paste0(deparse(substitute(x)), ".csv"))     else
-  stop("argument 'file' is missing") }, overwrite = FALSE)
+use_tabde_sql(
+  x,
+  file = {     if (assert_namespace("rprojroot"))         
+    rprojroot::find_package_root_file("inst", "table_design",
+    paste0(deparse(substitute(x)), ".csv"))     else stop("argument 'file' is missing") },
+  overwrite = FALSE
+)
 }
 \arguments{
 \item{x}{a \code{\link{table_design}} or a regular \code{data.frame}. Regular \code{data.frames}
@@ -33,7 +42,7 @@ default is to construct a filename from the name of the object passed to
 }
 \description{
 \code{use_tabde()} is designed to be used during package development. It saves
-\code{table_designs} to the \code{inst/table_design/} folder of the current
+\code{table_designs} to the \verb{inst/table_design/} folder of the current
 package (and creates this folder if it doesnt exist).
 
 \code{use_tabde_fwf()} and \code{use_tabde_sql()} are convenince functions that do the

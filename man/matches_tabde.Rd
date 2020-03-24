@@ -4,8 +4,13 @@
 \alias{matches_tabde}
 \title{Check If a Data Frame Matches a Table Design}
 \usage{
-matches_tabde(x, table_design, skip = "#skip", values = NULL,
-  check_nulls = FALSE)
+matches_tabde(
+  x,
+  table_design,
+  skip = "#skip",
+  values = NULL,
+  check_nulls = FALSE
+)
 }
 \arguments{
 \item{x}{a \code{data.frame}}
@@ -20,7 +25,7 @@ see also \code{\link[=as_col_spec]{as_col_spec()}}}
 valid values for each domain are looked up in \code{values}}
 
 \item{check_nulls}{\code{logical}. If set to \code{TRUE} and \code{table_design} is a
-\link{table_design_sql} with an \code{"sql_opts"} column, this checks if \code{NOT NULL}
+\link{table_design_sql} with an \code{"sql_opts"} column, this checks if \verb{NOT NULL}
 columns contain NA}
 }
 \value{

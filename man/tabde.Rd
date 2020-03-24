@@ -11,16 +11,31 @@
 \alias{tabde_sql}
 \title{tabde: Define and Check The Structure of Data Frames and Database Tables}
 \usage{
-tabde(col_name, col_type = rep(NA_character_, length(col_name)),
-  col_domain = NULL, ...)
+tabde(
+  col_name,
+  col_type = rep(NA_character_, length(col_name)),
+  col_domain = NULL,
+  ...
+)
 
-tabde_fwf(col_name, col_type = rep(NA_character_, length(col_name)),
-  fwf_start, fwf_end, col_domain = NULL, ...)
+tabde_fwf(
+  col_name,
+  col_type = rep(NA_character_, length(col_name)),
+  fwf_start,
+  fwf_end,
+  col_domain = NULL,
+  ...
+)
 
-tabde_sql(col_name, col_type = rep(NA_character_, length(col_name)),
+tabde_sql(
+  col_name,
+  col_type = rep(NA_character_, length(col_name)),
   sql_type = rep(NA_character_, length(col_name)),
-  sql_opts = rep(NA_character_, length(col_name)), col_domain = NULL,
-  ...)
+  sql_opts = rep(NA_character_, length(col_name)),
+  col_domain = NULL,
+  ...,
+  .constraints = NULL
+)
 }
 \arguments{
 \item{col_name}{\code{character} vector. column names}
@@ -30,7 +45,7 @@ and the string \code{"#skip"} have special meanings.
 
 \code{NA}s will be converted to \code{readr::col_guess()} by \code{\link[=as_col_spec]{as_col_spec()}} and
 \code{\link[=matches_tabde]{matches_tabde()}} will not check the classes of \code{NA} columns. In a similar
-fashion \code{#skip} columns will be convertet to \code{readr::col_skip()} and
+fashion \verb{#skip} columns will be convertet to \code{readr::col_skip()} and
 \code{matches_tabde} will not check if they are present in \code{dat} or not.}
 
 \item{col_domain}{\code{character} vector. A valid domain for \code{col_name}. Domains
@@ -48,7 +63,7 @@ DBMS System. Columns wil col_type \code{NA} will be skipped when creating
 SQL statements.}
 
 \item{sql_opts}{\code{character} vector. SQL Options to be used by \code{\link[=as_sql]{as_sql()}}
-(for example \code{NOT NULL})}
+(for example \verb{NOT NULL})}
 }
 \value{
 a \code{data.frame} of class \code{table_design}

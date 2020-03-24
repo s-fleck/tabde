@@ -16,7 +16,7 @@ as_table_design(x)
 
 as_table_design_fwf(x)
 
-as_table_design_sql(x)
+as_table_design_sql(x, constraints = attr(x, "constraints"))
 
 is_table_design(x)
 
