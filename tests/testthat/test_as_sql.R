@@ -39,7 +39,6 @@ test_that("generate_sql works as expected", {
 
 
 test_that("as_sql works as expected", {
-
   x <- tabde_sql(
     col_name = c("blah", "blubb"),
     col_type = c("integer", "integer"),
@@ -53,7 +52,63 @@ test_that("as_sql works as expected", {
       "blah.table",
       col_names = x$col_name,
       col_types = x$sql_type,
-      sql_opts  = x$sql_opts
+      col_opts  = x$sql_opts
     )
   )
 })
+
+
+
+
+test_that("sql_create_table_cols works as expected", {
+  expect_identical(sql_create_table_columns(
+    c("blah", "blubb"),
+    c("integer", "integer"),
+    c("NOT NULL", "UNIQUE")
+  ),
+    c("blah INTEGER NOT NULL", "blubb INTEGER UNIQUE")
+  )
+})
+
+
+
+
+test_that("sql_create_table_constraints works as expected for primary keys", {
+  expect_identical(sql_create_table_constraints(
+    c("X_BLAH_PK"),
+    c("PRIMARY KEY"),
+    list(c("firstname", "lastname"))
+  ),
+    "CONSTRAINT X_BLAH_PK PRIMARY KEY (firstname, lastname)"
+  )
+})
+
+
+
+
+test_that("sql_create_table works with columns and primary keys", {
+  expect_identical(
+    sql_create_table(
+      "test.table",
+      col_names = c("blah", "blubb"),
+      col_types = c("integer", "integer"),
+      col_opts  = c("", "not null"),
+      const_names = "X_TEST_PK",
+      const_types = "PRIMARY KEY",
+      const_cols = list(c("blah", "blubb"))
+    ),
+    "CREATE TABLE test.table (blah INTEGER, blubb INTEGER not null, CONSTRAINT X_TEST_PK PRIMARY KEY (blah, blubb))"
+  )
+
+
+  expect_error(sql_create_table(
+    "test.table",
+    col_names = c("blah", "blubb"),
+    col_types = c("integer", "integer"),
+    col_opts  = c("", "not null"),
+    const_names = "X_TEST_PK",
+    const_types = "PRIMARY KEY",
+    const_cols = list(c("blah", "blubb", "foo"))
+  ), "foo")
+})
+
