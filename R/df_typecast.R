@@ -212,8 +212,8 @@ defined_column_is_missing_warning <- function(missing_cols) {
     mcs
   )
 
-  condition(
-    c("defined_column_is_missing_warning", "warning"),
+  warningCondition(
+    c("defined_column_is_missing_warning"),
     message = msg
   )
 }
@@ -223,8 +223,8 @@ defined_column_is_missing_warning <- function(missing_cols) {
 
 typecast_produces_na_warning <- function(col, fclass, tclass, text) {
   msg <- sprintf("%s(%s->%s): %s", col, fclass, tclass, text)
-  condition(
-    c("typecast_produces_na_warning", "warning"),
+  warningCondition(
+    class = c("typecast_produces_na_warning"),
     message = msg
   )
 }
