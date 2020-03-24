@@ -8,6 +8,16 @@ test_that("read_tabde works as expected", {
     class(tres),
     c("table_design_sql", "table_design_fwf", "table_design", "data.frame")
   )
+})
 
 
+
+
+test_that("read_tabde works for csvy files", {
+  tres <- read_tabde(rprojroot::find_testthat_root_file("testdata", "iris.csvy"))
+
+  expect_identical(
+    as_sql(tres, "test.table"),
+    "CREATE TABLE test.table (Sepal.Length DOUBLE NOT NULL, Sepal.Width DOUBLE, Petal.Length DOUBLE, Petal.Width DOUBLE, Species VARCHAR(255), CONSTRAINT X_SPECIES_PK PRIMARY KEY (Species))"
+  )
 })

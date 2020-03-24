@@ -11,9 +11,25 @@
 #' @return `read_tabde()` and friends return a `table_design data.frame`
 #' @export
 #'
-read_tabde <- function(file){
+read_tabde <- function(
+  file
+){
+  assert(is_scalar_character(file))
+
+  if (grepl("\\.csvy$", file, ignore.case = TRUE))
+    read_tabde_csvy(file)
+  else
+    read_tabde_csv(file)
+}
+
+
+
+read_tabde_csv <- function(
+  file
+){
   res <- utils::read.csv2(
     file,
+    comment.char = "#",
     header = TRUE,
     row.names = NULL,
     stringsAsFactors = FALSE,
@@ -33,6 +49,21 @@ read_tabde <- function(file){
   if ("sql_type" %in% names(res)){
     res <- as_table_design_sql(res)
   }
+
+  res
+}
+
+
+
+read_tabde_csvy <- function(file){
+  assert_namespace("yaml")
+  dd  <- readLines(file)
+  sel <- grepl("^#", dd)
+  header <- yaml::read_yaml(text = gsub("^#", "", dd[sel]))
+  res    <- read_tabde_csv(file)
+
+  if ("constraints" %in% names(header))
+    attr(res, "constraints") <- header[["constraints"]]
 
   res
 }
