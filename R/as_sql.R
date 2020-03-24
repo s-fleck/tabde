@@ -42,7 +42,7 @@ as_sql.table_design_sql <- function(
     tname = tname,
     col_names = x$col_name,
     col_types = x$sql_type,
-    sql_opts  = x$sql_opts
+    col_opts  = x$col_opts
   )
 }
 
@@ -58,7 +58,7 @@ as_sql.table_design_sql <- function(
 #' @param col_names `character` vector. Column names of target sql table
 #' @param col_types `character` scalar. Column types of target sql table.
 #'   Columns of type `NA` will be skipped
-#' @param sql_opts column options of target sql table (for example `NOT NULL`)
+#' @param col_opts column options of target sql table (for example `NOT NULL`)
 #'
 #' @return a `CREATE TABLE` statement as a `character` scalar
 #' @export
@@ -74,14 +74,50 @@ sql_create_table <- function(
   tname,
   col_names,
   col_types,
-  sql_opts = rep("", length(col_names))
+  col_opts = rep("", length(col_names)),
+  const_names = NULL,
+  const_types = NULL,
+  const_cols = NULL
 ){
   # preconditions
+  assert(
+    is_scalar_character(tname)
+  )
+
+  cols <- sql_create_table_columns(col_names, col_types, col_opts)
+  cols <- paste0(
+    trimws(paste0(col_names, " ", col_types, " ", col_opts)),
+    collapse = ", "
+  )
+
+  if (!is.null(const_names)){
+    consts <- sql_create_table_constraints(
+      const_names,
+      const_types,
+      const_cols
+    )
+  } else {
+    assert(is.null(const_types), "If `const_names` is NULL, `const_types` must also be NULL, not", preview_object(const_types))
+    assert(is.null(const_cols),  "If `const_cols` is NULL, `const_types` must also be NULL, not", preview_object(const_cols))
+  }
+
+
+  sprintf("CREATE TABLE %s (%s)", tname, cols)
+}
+
+
+
+
+sql_create_table_columns <- function(
+  col_names,
+  col_types,
+  col_opts = rep("", length(col_names))
+){
+ # preconditions
   stopifnot(
-    is_scalar_character(tname),
     is.character(col_names),
     is.character(col_types),
-    is_equal_length(col_names, col_types, sql_opts)
+    is_equal_length(col_names, col_types, col_opts)
   )
 
   assert(
@@ -89,7 +125,7 @@ sql_create_table <- function(
     "All `col_names` must be unique and non-`NA`"
   )
 
-  sql_opts[is.na(sql_opts)] <- ""
+  col_opts[is.na(col_opts)] <- ""
   col_types  <- toupper(col_types)
 
   # process input
@@ -99,13 +135,42 @@ sql_create_table <- function(
     ))
     col_names <- col_names[!is.na(col_types)]
     col_types <- col_types[!is.na(col_types)]
-    sql_opts  <- sql_opts[!is.na(col_types)]
+    col_opts  <- col_opts[!is.na(col_types)]
   }
 
-  cols <- paste0(
-    trimws(paste0(col_names, " ", col_types, " ", sql_opts)),
-    collapse = ", "
+  trimws(paste0(col_names, " ", col_types, " ", col_opts))
+
+}
+
+
+
+sql_create_table_constraints <- function(
+  const_names,
+  const_types,
+  const_cols
+){
+  stopifnot(
+    is.character(const_names),
+    is.character(const_types),
+    is.list(const_cols),
+    is_equal_length(const_names, const_types, const_cols)
   )
 
-  sprintf("CREATE TABLE %s (%s)", tname, cols)
+  assert(
+    all(vapply(const_cols, is.character, logical(1))),
+    "`cols` must be a list of `character` vectors"
+  )
+
+  assert(all_are_distinct(const_names))
+
+  const_types <- toupper(const_types)
+
+  assert(all(
+    const_types == "PRIMARY KEY"
+    # const_types == "FOREIGN KEY"
+  ), "The only supported constraint types are 'PRIMARY KEY'")
+
+  fmt_cols <- function(.) paste0("(", paste(., collapse = ", "), ")")
+
+  paste("CONSTRAINT", const_names, const_types, vapply(const_cols, fmt_cols, character(1)))
 }
