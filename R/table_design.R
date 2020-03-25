@@ -112,3 +112,39 @@ is_table_design_fwf <- function(x){
 has_domains <- function(x){
   "col_domain" %in% colnames(x)
 }
+
+
+
+
+#' Title
+#'
+#' @param x
+#'
+#' @return
+#' @export
+#'
+#' @examples
+print.table_design <- function(
+  x
+){
+  print.data.frame(x)
+
+  const <- attr(x, "constraints")
+
+  if (!is.null(const)){
+    cat("\n")
+    const <- normalize_constraints(const)
+
+    cat(
+      pad_right(const$const_types),
+      "\t",
+      pad_right(const$const_names),
+      "\t",
+      vapply(const$const_cols, preview_object, character(1))
+    )
+
+  }
+
+
+
+}
