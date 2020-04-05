@@ -41,14 +41,13 @@ as_sql.table_design_sql <- function(
   constraints <- attr(x, "constraints")
 
   if (!is.null(constraints)){
-    constraints <- normalize_constraints(constraints)
     sql_create_table(
       tname = tname,
       col_names = x$col_name,
       col_types = x$sql_type,
       col_opts  = x$sql_opts,
-      const_names = constraints$const_names,
-      const_types = constraints$const_types,
+      const_names = constraints$const_name,
+      const_types = constraints$const_type,
       const_cols  = constraints$const_cols
     )
   } else {
@@ -191,20 +190,4 @@ sql_create_table_constraints <- function(
   fmt_cols <- function(.) paste0("(", paste(., collapse = ", "), ")")
 
   paste("CONSTRAINT", const_names, const_types, vapply(const_cols, fmt_cols, character(1)))
-}
-
-
-
-normalize_constraints <- function(
-  x
-){
-  if ("const_names" %in% names(x)){
-    x
-  } else {
-    list(
-      const_names = names(x),
-      const_types = vapply(x, `[[`, character(1), "type"),
-      const_cols  = lapply(x, `[[`, "columns")
-    )
-  }
 }

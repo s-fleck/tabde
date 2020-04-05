@@ -63,7 +63,7 @@ read_tabde_csvy <- function(file){
   res    <- read_tabde_csv(file)
 
   if ("constraints" %in% names(header))
-    attr(res, "constraints") <- header[["constraints"]]
+    attr(res, "constraints") <- as_tabde_constraints(header[["constraints"]])
 
   res
 }
