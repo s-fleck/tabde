@@ -69,7 +69,7 @@ as_table_design_sql.data.frame <- function(
   constraints = attr(x, "constraints")
 ){
   if (!is.null(constraints))
-    assert_valid_constraints(constraints)
+    constraints <- as_tabde_constraints(constraints)
 
   assert(all(c("sql_type", "sql_opts") %in% names(x)))
   x <- as_table_design(x)
