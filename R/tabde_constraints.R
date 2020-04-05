@@ -18,7 +18,8 @@
 tabde_constraints <- function(
   const_name,
   const_type,
-  const_cols
+  const_cols,
+  ...
 ){
   assert(
     all(toupper(const_type) == "PRIMARY KEY"),
@@ -41,7 +42,8 @@ tabde_constraints <- function(
     const_type = const_type,
     const_cols = I(const_cols),
     stringsAsFactors = FALSE,
-    row.names = NULL
+    row.names = NULL,
+    ...
   ),
     class = c("tabde_constraints", "data.frame")
   )
@@ -60,6 +62,30 @@ tabde_constraints <- function(
 #' @examples
 as_tabde_constraints <- function(x){
   UseMethod("as_tabde_constraints")
+}
+
+
+
+
+#' Title
+#'
+#' @param x
+#'
+#' @return
+#' @export
+#'
+#' @examples
+as_tabde_constraints.data.frame <- function(x){
+  misc_cols <- x[, !colnames(x) %in% c("const_name", "const_type", "const_cols")]
+
+  fct_to_char <- function(x) if (is.factor(x)) as.character(x) else (x)
+
+  tabde_constraints(
+    const_name = fct_to_char(x$const_name),
+    const_type = fct_to_char(x$const_type),
+    const_cols = fct_to_char(x$const_cols),
+    misc_cols
+  )
 }
 
 
