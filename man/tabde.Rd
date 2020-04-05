@@ -64,6 +64,8 @@ SQL statements.}
 
 \item{sql_opts}{\code{character} vector. SQL Options to be used by \code{\link[=as_sql]{as_sql()}}
 (for example \verb{NOT NULL})}
+
+\item{.constraints}{a \code{\link[=tabde_constraints]{tabde_constraints()}} \code{data.frame}}
 }
 \value{
 a \code{data.frame} of class \code{table_design}
@@ -78,6 +80,15 @@ such as column names and types. Such \code{table_designs} can be used for
 validating the structure of \code{data.frames}, generating \code{SQL} code, reading
 files, etc...
 }
+\section{Database constraints}{
+
+
+A table design can contain a \code{\link[=tabde_constraints]{tabde_constraints()}} object that
+represents database constraints (such as \emph{primary key}) as the attribute
+\code{'constraints'}. If such an attribute is present, \code{\link[=as_sql]{as_sql()}} will use it
+when transforming a table design to an SQL \verb{CREATE TABLE} statement.
+}
+
 \section{Storing table_desings}{
 
 
@@ -86,6 +97,18 @@ disadvantages over storing them in a binary format such as \code{.rds} or \code{
 but makes it easy to edit them and track changes in a VCS such as git.
 }
 
+\examples{
+tabde_sql(
+   col_name = c("first_name", "last_name", "age"),
+   col_type = c("character", "character", "integer"),
+   sql_type = c("varchar(255)", "varchar(255)", "integer"),
+    .constraints = tabde_constraints(
+      "person_pk",
+      "primary key",
+      list(c("first_name", "last_name"))
+    )
+ )
+}
 \seealso{
 \itemize{
 \item validate \code{data.frames} with \code{\link[=matches_tabde]{matches_tabde()}}
