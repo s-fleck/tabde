@@ -120,9 +120,9 @@ test_that("as_sql.table_design_sql works as expected with constraints", {
     col_type = c("integer", "integer"),
     sql_opts  = c("", "not null"),
     sql_type = c("integer", "integer"),
-    .constraints = list(
-      const_names = "X_TEST_PK",
-      const_types = "PRIMARY KEY",
+    .constraints = tabde_constraints(
+      const_name = "X_TEST_PK",
+      const_type = "PRIMARY KEY",
       const_cols = list(c("blah", "blubb"))
     )
   )

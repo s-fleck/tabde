@@ -10,7 +10,7 @@ test_that("tabde_constraints works as expected", {
 
 test_that("tabde_constraints works as expected", {
 
-  yaml <-
+yaml <-
 '
 ---
 constraints:
@@ -25,7 +25,6 @@ constraints:
 
 ---
 '
-
   x <- yaml::read_yaml(text = yaml)
   x <- x[["constraints"]]
   res <- as_tabde_constraints(x)
@@ -35,4 +34,21 @@ constraints:
     res$const_cols,
     I(list("name", c("first_name", "last_name")))
   )
+})
+
+
+
+
+test_that("as_tabde_constraints.data.frame works as expected", {
+
+  df <- data.frame(
+    const_name = "foo",
+    const_type = "primary key",
+    const_cols = "id",
+    metainfo = "foobar",
+    othercol = "blah"
+  )
+
+  expect_length(as_tabde_constraints(df), 5)
+  expect_s3_class(as_tabde_constraints(df), "tabde_constraints")
 })
