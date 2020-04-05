@@ -135,16 +135,12 @@ print.table_design <- function(
     cat("\n")
     const <- normalize_constraints(const)
 
-    cat(
+    cat(style_yellow(
       pad_right(const$const_types),
       "\t",
       pad_right(const$const_names),
       "\t",
       vapply(const$const_cols, preview_object, character(1))
-    )
-
+    ))
   }
-
-
-
 }
