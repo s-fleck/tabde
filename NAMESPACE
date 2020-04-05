@@ -3,6 +3,7 @@
 S3method(as_col_positions,table_design_fwf)
 S3method(as_col_spec,character)
 S3method(as_sql,table_design_sql)
+S3method(as_tabde_constraints,data.frame)
 S3method(as_tabde_constraints,list)
 S3method(as_table_design,data.frame)
 S3method(as_table_design_fwf,data.frame)

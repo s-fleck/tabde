@@ -5,6 +5,13 @@
 #' validating the structure of `data.frames`, generating `SQL` code, reading
 #' files, etc...
 #'
+#' @section Database constraints:
+#'
+#' A table design can contain a [tabde_constraints()] object that
+#' represents database constraints (such as *primary key*) as the attribute
+#' `'constraints'`. If such an attribute is present, [as_sql()] will use it
+#' when transforming a table design to an SQL `CREATE TABLE` statement.
+#'
 #' @section Storing table_desings:
 #'
 #' `table_desings` are designed to be stored as `.csv` files. This has some
@@ -108,6 +115,7 @@ tabde_fwf <- function(
 
 
 
+#' @param .constraints a [tabde_constraints()] `data.frame`
 #' @rdname tabde
 #' @param sql_type  `character` vector. SQL Data Types as supported by target
 #'   DBMS System. Columns wil col_type `NA` will be skipped when creating
@@ -115,6 +123,17 @@ tabde_fwf <- function(
 #' @param sql_opts  `character` vector. SQL Options to be used by [as_sql()]
 #'   (for example `NOT NULL`)
 #' @export
+#' @examples
+#' tabde_sql(
+#'    col_name = c("first_name", "last_name", "age"),
+#'    col_type = c("character", "character", "integer"),
+#'    sql_type = c("varchar(255)", "varchar(255)", "integer"),
+#'     .constraints = tabde_constraints(
+#'       "person_pk",
+#'       "primary key",
+#'       list(c("first_name", "last_name"))
+#'     )
+#'  )
 tabde_sql <- function(
   col_name,
   col_type = rep(NA_character_, length(col_name)),
@@ -134,22 +153,4 @@ tabde_sql <- function(
   )
 
   as_table_design_sql(res, constraints = .constraints)
-}
-
-
-
-assert_valid_constraints <- function(
-  x
-){
-  assert(
-    all(c("const_names", "const_types", "const_cols") %in% names(x)),
-    "`constraints` must be a named list with the elements `const_names`, `const_types` and `const_cols`"
-  )
-  assert(
-    is.character(x$const_names) &&
-    is.character(x$const_types) &&
-    is.list(x$const_cols) &&
-    is_equal_length(x$const_names, x$const_types, x$const_cols)
-  )
-  TRUE
 }
