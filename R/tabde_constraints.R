@@ -3,8 +3,8 @@
 #' @param const_name `character` vector. Name of the constraint.
 #' @param const_type `character` vector. Type of the constraint. Currently
 #'   the only supported value is `"PRIMARY KEY"` but foreign keys will be
-#'   supported in the futre.
-#' @param const_cols a `list` of `character` vectors that mus tbe the same
+#'   supported in the future
+#' @param const_cols a `list` of `character` vectors that must be the same
 #'   length as `const_name`. If each constraint only consists of a single
 #'   column, `const_cols` may also be a `character` vector of the same length
 #'   as `const_name`.

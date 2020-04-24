@@ -45,7 +45,7 @@ and the string \code{"#skip"} have special meanings.
 
 \code{NA}s will be converted to \code{readr::col_guess()} by \code{\link[=as_col_spec]{as_col_spec()}} and
 \code{\link[=matches_tabde]{matches_tabde()}} will not check the classes of \code{NA} columns. In a similar
-fashion \verb{#skip} columns will be convertet to \code{readr::col_skip()} and
+fashion \verb{#skip} columns will be converted to \code{readr::col_skip()} and
 \code{matches_tabde} will not check if they are present in \code{dat} or not.}
 
 \item{col_domain}{\code{character} vector. A valid domain for \code{col_name}. Domains
@@ -54,12 +54,12 @@ can be used by \code{\link[=matches_tabde]{matches_tabde()}} and \code{\link[=as
 
 \item{...}{passed on to methods}
 
-\item{fwf_start}{\code{integer} vector. fwf start positons}
+\item{fwf_start}{\code{integer} vector. fwf start positions}
 
-\item{fwf_end}{\code{integer} vector. fwf end positons}
+\item{fwf_end}{\code{integer} vector. fwf end positions}
 
 \item{sql_type}{\code{character} vector. SQL Data Types as supported by target
-DBMS System. Columns wil col_type \code{NA} will be skipped when creating
+DBMS System. Columns with col_type \code{NA} will be skipped when creating
 SQL statements.}
 
 \item{sql_opts}{\code{character} vector. SQL Options to be used by \code{\link[=as_sql]{as_sql()}}
@@ -89,7 +89,7 @@ represents database constraints (such as \emph{primary key}) as the attribute
 when transforming a table design to an SQL \verb{CREATE TABLE} statement.
 }
 
-\section{Storing table_desings}{
+\section{Storing table_designs}{
 
 
 \code{table_desings} are designed to be stored as \code{.csv} files. This has some

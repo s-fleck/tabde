@@ -5,7 +5,7 @@
 \alias{read_tabde_sql}
 \alias{read_tabde_fwf}
 \alias{write_tabde}
-\title{Read a table defintion file}
+\title{Read a table definition file}
 \usage{
 read_tabde(file)
 

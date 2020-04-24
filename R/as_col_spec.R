@@ -1,8 +1,8 @@
-#' Conver Character Data Type Description to `readr::col_spec`
+#' Convert character data type description to `readr::col_spec`
 #'
 #' @param x a `character` vector of data types.
 #'
-#' @return a `col_spec` Objekt (see [readr::cols()])
+#' @return a `col_spec` object (see [readr::cols()])
 #' @export
 #'
 #' @examples

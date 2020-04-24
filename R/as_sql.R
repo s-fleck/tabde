@@ -97,7 +97,7 @@ sql_create_table <- function(
   assert(is_scalar_character(tname))
   assert(
     all(unlist(const_cols) %in% col_names),
-    "All `const_cols` must be present the table defintion. ",
+    "All `const_cols` must be present the table definition. ",
     "The following are not: ", paste(sort(setdiff(unlist(const_cols), col_names)), collapse = ", ")
   )
 

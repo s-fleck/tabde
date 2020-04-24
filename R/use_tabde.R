@@ -5,9 +5,9 @@
 #'
 #' `use_tabde()` is designed to be used during package development. It saves
 #' `table_designs` to the `inst/table_design/` folder of the current
-#' package (and creates this folder if it doesnt exist).
+#' package (and creates this folder if it doesn't exist).
 #'
-#' `use_tabde_fwf()` and `use_tabde_sql()` are convenince functions that do the
+#' `use_tabde_fwf()` and `use_tabde_sql()` are convenience functions that do the
 #' same and add the respective dummy columns.
 #'
 #' @param x a [`table_design`] or a regular `data.frame`. Regular `data.frames`

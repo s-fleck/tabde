@@ -1,4 +1,4 @@
-#' Read a table defintion file
+#' Read a table definition file
 #'
 #' tabde recommends that you store table designs as semicolon (`;`) separated
 #' csv files with header and without rownames. `read_tabde()` reads such files

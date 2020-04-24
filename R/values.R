@@ -1,7 +1,6 @@
 #' Value-Domains For Columns in Table Designs
 #'
-#'
-#' @param domain name oder id of the domain.
+#' @param domain name or id of the domain.
 #' @param value values that the `domains` can take
 #'
 #' @return a `data.frame` of class `"tabde_values"`

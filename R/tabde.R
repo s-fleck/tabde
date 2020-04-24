@@ -12,7 +12,7 @@
 #' `'constraints'`. If such an attribute is present, [as_sql()] will use it
 #' when transforming a table design to an SQL `CREATE TABLE` statement.
 #'
-#' @section Storing table_desings:
+#' @section Storing table_designs:
 #'
 #' `table_desings` are designed to be stored as `.csv` files. This has some
 #' disadvantages over storing them in a binary format such as `.rds` or `.rda`,
@@ -25,7 +25,7 @@
 #'
 #'   `NA`s will be converted to `readr::col_guess()` by [as_col_spec()] and
 #'   [matches_tabde()] will not check the classes of `NA` columns. In a similar
-#'   fashion `#skip` columns will be convertet to `readr::col_skip()` and
+#'   fashion `#skip` columns will be converted to `readr::col_skip()` and
 #'   `matches_tabde` will not check if they are present in `dat` or not.
 #'
 #' @param col_domain `character` vector. A valid domain for `col_name`. Domains
@@ -89,8 +89,8 @@ tabde <- function(
 
 
 #' @rdname tabde
-#' @param fwf_start `integer` vector. fwf start positons
-#' @param fwf_end  `integer` vector. fwf end positons
+#' @param fwf_start `integer` vector. fwf start positions
+#' @param fwf_end  `integer` vector. fwf end positions
 #' @export
 tabde_fwf <- function(
   col_name,
@@ -118,7 +118,7 @@ tabde_fwf <- function(
 #' @param .constraints a [tabde_constraints()] `data.frame`
 #' @rdname tabde
 #' @param sql_type  `character` vector. SQL Data Types as supported by target
-#'   DBMS System. Columns wil col_type `NA` will be skipped when creating
+#'   DBMS System. Columns with col_type `NA` will be skipped when creating
 #'   SQL statements.
 #' @param sql_opts  `character` vector. SQL Options to be used by [as_sql()]
 #'   (for example `NOT NULL`)

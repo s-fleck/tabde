@@ -11,9 +11,9 @@ tabde_constraints(const_name, const_type, const_cols, ...)
 
 \item{const_type}{\code{character} vector. Type of the constraint. Currently
 the only supported value is \code{"PRIMARY KEY"} but foreign keys will be
-supported in the futre.}
+supported in the future}
 
-\item{const_cols}{a \code{list} of \code{character} vectors that mus tbe the same
+\item{const_cols}{a \code{list} of \code{character} vectors that must be the same
 length as \code{const_name}. If each constraint only consists of a single
 column, \code{const_cols} may also be a \code{character} vector of the same length
 as \code{const_name}.}

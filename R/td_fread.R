@@ -1,7 +1,7 @@
 #' Read csv files fast using the data.table package and table_designs
 #'
 #' A wrapper around [data.table::fread()] that automatically fills the
-#' `col.names` and `colClasses` paramters from a table design.
+#' `col.names` and `colClasses` parameters from a table design.
 #'
 #' @inheritParams data.table::fread
 #' @param table_design a [table_design]

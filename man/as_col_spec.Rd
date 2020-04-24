@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_col_spec.R
 \name{as_col_spec}
 \alias{as_col_spec}
-\title{Conver Character Data Type Description to \code{readr::col_spec}}
+\title{Convert character data type description to \code{readr::col_spec}}
 \usage{
 as_col_spec(x)
 }
@@ -10,10 +10,10 @@ as_col_spec(x)
 \item{x}{a \code{character} vector of data types.}
 }
 \value{
-a \code{col_spec} Objekt (see \code{\link[readr:cols]{readr::cols()}})
+a \code{col_spec} object (see \code{\link[readr:cols]{readr::cols()}})
 }
 \description{
-Conver Character Data Type Description to \code{readr::col_spec}
+Convert character data type description to \code{readr::col_spec}
 }
 \examples{
 

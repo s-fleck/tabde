@@ -19,5 +19,5 @@ a \code{list} with columns \code{start}, \code{end}, \code{col_names}
 }
 \description{
 Convert \code{\link{table_design_fwf}} objects to lists that can be used as
-\code{col_positons} argument to \code{\link[readr:read_fwf]{readr::read_fwf()}}
+\code{col_positions} argument to \code{\link[readr:read_fwf]{readr::read_fwf()}}
 }

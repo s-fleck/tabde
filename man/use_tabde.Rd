@@ -43,8 +43,8 @@ default is to construct a filename from the name of the object passed to
 \description{
 \code{use_tabde()} is designed to be used during package development. It saves
 \code{table_designs} to the \verb{inst/table_design/} folder of the current
-package (and creates this folder if it doesnt exist).
+package (and creates this folder if it doesn't exist).
 
-\code{use_tabde_fwf()} and \code{use_tabde_sql()} are convenince functions that do the
+\code{use_tabde_fwf()} and \code{use_tabde_sql()} are convenience functions that do the
 same and add the respective dummy columns.
 }

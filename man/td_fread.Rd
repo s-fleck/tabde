@@ -24,5 +24,5 @@ A \code{data.table} by default, otherwise a \code{data.frame} when argument \cod
 }
 \description{
 A wrapper around \code{\link[data.table:fread]{data.table::fread()}} that automatically fills the
-\code{col.names} and \code{colClasses} paramters from a table design.
+\code{col.names} and \code{colClasses} parameters from a table design.
 }

@@ -7,7 +7,7 @@
 values(domain, value)
 }
 \arguments{
-\item{domain}{name oder id of the domain.}
+\item{domain}{name or id of the domain.}
 
 \item{value}{values that the \code{domains} can take}
 }
