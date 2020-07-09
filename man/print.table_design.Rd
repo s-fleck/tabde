@@ -4,7 +4,7 @@
 \alias{print.table_design}
 \title{Title}
 \usage{
-\method{print}{table_design}(x)
+\method{print}{table_design}(x, ...)
 }
 \arguments{
 \item{x}{}

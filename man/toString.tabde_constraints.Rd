@@ -4,7 +4,7 @@
 \alias{toString.tabde_constraints}
 \title{Title}
 \usage{
-\method{toString}{tabde_constraints}(x)
+\method{toString}{tabde_constraints}(x, ...)
 }
 \arguments{
 \item{x}{}

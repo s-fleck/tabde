@@ -125,7 +125,8 @@ has_domains <- function(x){
 #'
 #' @examples
 print.table_design <- function(
-  x
+  x,
+  ...
 ){
   print.data.frame(x)
   const <- attr(x, "constraints")

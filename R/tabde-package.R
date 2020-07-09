@@ -13,7 +13,7 @@ style_yellow <- function(...){
 }
 
 
-style_red <- function(x){
+style_red <- function(...){
   if (requireNamespace("crayon", quietly = TRUE))
     crayon::red(...)
   else

@@ -117,7 +117,10 @@ as_tabde_constraints.list <- function(x){
 #' @export
 #'
 #' @examples
-toString.tabde_constraints <- function(x){
+toString.tabde_constraints <- function(
+  x,
+  ...
+){
   paste(
     pad_right(x$const_type),
     "\t",
