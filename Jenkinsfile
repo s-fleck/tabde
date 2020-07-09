@@ -1,9 +1,6 @@
 @Library('jenkins-r-shared-library') _
 
-rBuildPipeline(
-  dockerImage: 'library/r-base:3.5.3-stat-latest',
-  mailTo: 'stefan.fleck@statistik.gv.at',
-  githubPackages: '-',
-  additionalScript:'-',
-  ignoreCheck:'NO'
+rPipelineYAML(
+  docker_image: "library/r-base:3.6.3-stat-latest",
+  config: "jenkins.yaml"
 )
