@@ -8,6 +8,7 @@
 #'   length as `const_name`. If each constraint only consists of a single
 #'   column, `const_cols` may also be a `character` vector of the same length
 #'   as `const_name`.
+#' @param ... extra columns to be added to the resulting data.frame
 #'
 #' @return a `data.frame`
 #' @export
@@ -52,14 +53,12 @@ tabde_constraints <- function(
 
 
 
-#' Title
+#' Coerce to tabde_constraints
 #'
-#' @param x
+#' @param x any supported \R object
 #'
-#' @return
+#' @return a `tabde_constraints` object
 #' @export
-#'
-#' @examples
 as_tabde_constraints <- function(x){
   UseMethod("as_tabde_constraints")
 }
@@ -67,14 +66,8 @@ as_tabde_constraints <- function(x){
 
 
 
-#' Title
-#'
-#' @param x
-#'
-#' @return
+#' @rdname as_tabde_constraints
 #' @export
-#'
-#' @examples
 as_tabde_constraints.data.frame <- function(x){
   misc_cols <- x[, !colnames(x) %in% c("const_name", "const_type", "const_cols")]
 
@@ -91,14 +84,8 @@ as_tabde_constraints.data.frame <- function(x){
 
 
 
-#' Title
-#'
-#' @param x
-#'
-#' @return
+#' @rdname as_tabde_constraints
 #' @export
-#'
-#' @examples
 as_tabde_constraints.list <- function(x){
   tabde_constraints(
     names(x),
@@ -109,14 +96,12 @@ as_tabde_constraints.list <- function(x){
 
 
 
-#' Title
+#' Convert tabde_constraints to a character string
 #'
-#' @param x
-#'
-#' @return
+#' @param x any \R object
+#' @param ... ignored
+#' @return a `character` scalar
 #' @export
-#'
-#' @examples
 toString.tabde_constraints <- function(
   x,
   ...

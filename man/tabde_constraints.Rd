@@ -17,6 +17,8 @@ supported in the future}
 length as \code{const_name}. If each constraint only consists of a single
 column, \code{const_cols} may also be a \code{character} vector of the same length
 as \code{const_name}.}
+
+\item{...}{extra columns to be added to the resulting data.frame}
 }
 \value{
 a \code{data.frame}

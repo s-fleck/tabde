@@ -2,16 +2,18 @@
 % Please edit documentation in R/table_design.R
 \name{print.table_design}
 \alias{print.table_design}
-\title{Title}
+\title{Print a table_design object}
 \usage{
 \method{print}{table_design}(x, ...)
 }
 \arguments{
-\item{x}{}
+\item{x}{any \R object}
+
+\item{...}{ignored}
 }
 \value{
-
+\code{x} (invisibly)
 }
 \description{
-Title
+Print a table_design object
 }

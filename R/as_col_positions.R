@@ -5,7 +5,7 @@
 #'
 #' @param x a `table_design_fwf` object.
 #'
-#' @return a `list` with columns `start`, `end`, `col_names`.
+#' @return a `list` with columns `start`, `end`, `col_name`.
 #' @export
 #'
 as_col_positions <- function(x){
@@ -16,12 +16,12 @@ as_col_positions <- function(x){
 
 
 #' @rdname as_col_positions
-#' @return a `list` with columns `start`, `end`, `col_names`
+#' @return a `list` with columns `start`, `end`, `col_name`
 #' @export
 as_col_positions.table_design_fwf <- function(x){
   list(
     begin = x$fwf_start,
     end   = x$fwf_end,
-    col_names = x$col_name
+    col_name = x$col_name
   )
 }

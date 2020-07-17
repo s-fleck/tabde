@@ -6,23 +6,34 @@
 \usage{
 sql_create_table(
   tname,
-  col_names,
-  col_types,
-  col_opts = rep("", length(col_names)),
-  const_names = NULL,
-  const_types = NULL,
+  col_name,
+  col_type,
+  col_opts = rep("", length(col_name)),
+  const_name = NULL,
+  const_type = NULL,
   const_cols = NULL
 )
 }
 \arguments{
 \item{tname}{\code{character} scalar. Name of target sql table}
 
-\item{col_names}{\code{character} vector. Column names of target sql table}
+\item{col_name}{\code{character} vector. Column names of target sql table}
 
-\item{col_types}{\code{character} scalar. Column types of target sql table.
+\item{col_type}{\code{character} scalar. Column types of target sql table.
 Columns of type \code{NA} will be skipped}
 
 \item{col_opts}{column options of target sql table (for example \verb{NOT NULL})}
+
+\item{const_name}{\code{character} vector. Name of the constraint.}
+
+\item{const_type}{\code{character} vector. Type of the constraint. Currently
+the only supported value is \code{"PRIMARY KEY"} but foreign keys will be
+supported in the future}
+
+\item{const_cols}{a \code{list} of \code{character} vectors that must be the same
+length as \code{const_name}. If each constraint only consists of a single
+column, \code{const_cols} may also be a \code{character} vector of the same length
+as \code{const_name}.}
 }
 \value{
 a \verb{CREATE TABLE} statement as a \code{character} scalar

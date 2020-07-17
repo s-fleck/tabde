@@ -2,16 +2,22 @@
 % Please edit documentation in R/tabde_constraints.R
 \name{as_tabde_constraints}
 \alias{as_tabde_constraints}
-\title{Title}
+\alias{as_tabde_constraints.data.frame}
+\alias{as_tabde_constraints.list}
+\title{Coerce to tabde_constraints}
 \usage{
 as_tabde_constraints(x)
+
+\method{as_tabde_constraints}{data.frame}(x)
+
+\method{as_tabde_constraints}{list}(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{any supported \R object}
 }
 \value{
-
+a \code{tabde_constraints} object
 }
 \description{
-Title
+Coerce to tabde_constraints
 }

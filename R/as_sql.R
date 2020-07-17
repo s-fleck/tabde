@@ -1,6 +1,6 @@
 #' Generate an SQL CREATE TABLE Statement From a tabde Table Design
 #'
-#' This does not perform any sanity check on the input data. `col_names` and
+#' This does not perform any sanity check on the input data. `col_name` and
 #' `sql_type` must be compatible with the DBMS that you want to use.
 #'
 #' @param x any \R object
@@ -43,18 +43,18 @@ as_sql.table_design_sql <- function(
   if (!is.null(constraints)){
     sql_create_table(
       tname = tname,
-      col_names = x$col_name,
-      col_types = x$sql_type,
+      col_name = x$col_name,
+      col_type = x$sql_type,
       col_opts  = x$sql_opts,
-      const_names = constraints$const_name,
-      const_types = constraints$const_type,
+      const_name = constraints$const_name,
+      const_type = constraints$const_type,
       const_cols  = constraints$const_cols
     )
   } else {
     sql_create_table(
       tname = tname,
-      col_names = x$col_name,
-      col_types = x$sql_type,
+      col_name = x$col_name,
+      col_type = x$sql_type,
       col_opts  = x$sql_opts
     )
   }
@@ -69,10 +69,11 @@ as_sql.table_design_sql <- function(
 #' a vector of column types
 #'
 #' @param tname `character` scalar. Name of target sql table
-#' @param col_names `character` vector. Column names of target sql table
-#' @param col_types `character` scalar. Column types of target sql table.
+#' @param col_name `character` vector. Column names of target sql table
+#' @param col_type `character` scalar. Column types of target sql table.
 #'   Columns of type `NA` will be skipped
 #' @param col_opts column options of target sql table (for example `NOT NULL`)
+#' @inheritParams tabde_constraints
 #'
 #' @return a `CREATE TABLE` statement as a `character` scalar
 #' @export
@@ -86,35 +87,35 @@ as_sql.table_design_sql <- function(
 #' )
 sql_create_table <- function(
   tname,
-  col_names,
-  col_types,
-  col_opts = rep("", length(col_names)),
-  const_names = NULL,
-  const_types = NULL,
+  col_name,
+  col_type,
+  col_opts = rep("", length(col_name)),
+  const_name = NULL,
+  const_type = NULL,
   const_cols = NULL
 ){
   # preconditions
   assert(is_scalar_character(tname))
   assert(
-    all(unlist(const_cols) %in% col_names),
+    all(unlist(const_cols) %in% col_name),
     "All `const_cols` must be present the table definition. ",
-    "The following are not: ", paste(sort(setdiff(unlist(const_cols), col_names)), collapse = ", ")
+    "The following are not: ", paste(sort(setdiff(unlist(const_cols), col_name)), collapse = ", ")
   )
 
-  els <- sql_create_table_columns(col_names, col_types, col_opts)
+  els <- sql_create_table_columns(col_name, col_type, col_opts)
 
-  if (!is.null(const_names)){
+  if (!is.null(const_name)){
     consts <- sql_create_table_constraints(
-      const_names,
-      const_types,
+      const_name,
+      const_type,
       const_cols
     )
 
     els <- c(els, consts)
 
   } else {
-    assert(is.null(const_types), "If `const_names` is NULL, `const_types` must also be NULL, not", preview_object(const_types))
-    assert(is.null(const_cols),  "If `const_cols` is NULL, `const_types` must also be NULL, not", preview_object(const_cols))
+    assert(is.null(const_type), "If `const_name` is NULL, `const_type` must also be NULL, not", preview_object(const_type))
+    assert(is.null(const_cols),  "If `const_cols` is NULL, `const_type` must also be NULL, not", preview_object(const_cols))
   }
 
   els <- paste(els,  collapse = ", ")
@@ -126,51 +127,51 @@ sql_create_table <- function(
 
 
 sql_create_table_columns <- function(
-  col_names,
-  col_types,
-  col_opts = rep("", length(col_names))
+  col_name,
+  col_type,
+  col_opts = rep("", length(col_name))
 ){
  # preconditions
   stopifnot(
-    is.character(col_names),
-    is.character(col_types),
-    is_equal_length(col_names, col_types, col_opts)
+    is.character(col_name),
+    is.character(col_type),
+    is_equal_length(col_name, col_type, col_opts)
   )
 
   assert(
-    !anyNA(col_names) && all_are_distinct(col_names),
-    "All `col_names` must be unique and non-`NA`"
+    !anyNA(col_name) && all_are_distinct(col_name),
+    "All `col_name` must be unique and non-`NA`"
   )
 
   col_opts[is.na(col_opts)] <- ""
-  col_types  <- toupper(col_types)
+  col_type  <- toupper(col_type)
 
   # process input
-  if (any(is.na(col_types))){
+  if (any(is.na(col_type))){
     message(sprintf(
-      "Skipping %s columns where `col_type` equals `NA`", sum(is.na(col_types))
+      "Skipping %s columns where `col_type` equals `NA`", sum(is.na(col_type))
     ))
-    col_names <- col_names[!is.na(col_types)]
-    col_types <- col_types[!is.na(col_types)]
-    col_opts  <- col_opts[!is.na(col_types)]
+    col_name <- col_name[!is.na(col_type)]
+    col_type <- col_type[!is.na(col_type)]
+    col_opts  <- col_opts[!is.na(col_type)]
   }
 
-  trimws(paste0(col_names, " ", col_types, " ", col_opts))
+  trimws(paste0(col_name, " ", col_type, " ", col_opts))
 
 }
 
 
 
 sql_create_table_constraints <- function(
-  const_names,
-  const_types,
+  const_name,
+  const_type,
   const_cols
 ){
   stopifnot(
-    is.character(const_names),
-    is.character(const_types),
+    is.character(const_name),
+    is.character(const_type),
     is.list(const_cols),
-    is_equal_length(const_names, const_types, const_cols)
+    is_equal_length(const_name, const_type, const_cols)
   )
 
   assert(
@@ -178,16 +179,16 @@ sql_create_table_constraints <- function(
     "`cols` must be a list of `character` vectors"
   )
 
-  assert(all_are_distinct(const_names))
+  assert(all_are_distinct(const_name))
 
-  const_types <- toupper(const_types)
+  const_type <- toupper(const_type)
 
   assert(all(
-    const_types == "PRIMARY KEY"
-    # const_types == "FOREIGN KEY"
+    const_type == "PRIMARY KEY"
+    # const_type == "FOREIGN KEY"
   ), "The only supported constraint types are 'PRIMARY KEY'")
 
   fmt_cols <- function(.) paste0("(", paste(., collapse = ", "), ")")
 
-  paste("CONSTRAINT", const_names, const_types, vapply(const_cols, fmt_cols, character(1)))
+  paste("CONSTRAINT", const_name, const_type, vapply(const_cols, fmt_cols, character(1)))
 }

@@ -2,16 +2,18 @@
 % Please edit documentation in R/tabde_constraints.R
 \name{toString.tabde_constraints}
 \alias{toString.tabde_constraints}
-\title{Title}
+\title{Convert tabde_constraints to a character string}
 \usage{
 \method{toString}{tabde_constraints}(x, ...)
 }
 \arguments{
-\item{x}{}
+\item{x}{any \R object}
+
+\item{...}{ignored}
 }
 \value{
-
+a \code{character} scalar
 }
 \description{
-Title
+Convert tabde_constraints to a character string
 }

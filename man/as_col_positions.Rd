@@ -13,9 +13,9 @@ as_col_positions(x)
 \item{x}{a \code{table_design_fwf} object.}
 }
 \value{
-a \code{list} with columns \code{start}, \code{end}, \code{col_names}.
+a \code{list} with columns \code{start}, \code{end}, \code{col_name}.
 
-a \code{list} with columns \code{start}, \code{end}, \code{col_names}
+a \code{list} with columns \code{start}, \code{end}, \code{col_name}
 }
 \description{
 Convert \code{\link{table_design_fwf}} objects to lists that can be used as

@@ -49,8 +49,8 @@ test_that("as_sql works as expected", {
     as_sql(x, "blah.table"),
     sql_create_table(
       "blah.table",
-      col_names = x$col_name,
-      col_types = x$sql_type,
+      col_name = x$col_name,
+      col_type = x$sql_type,
       col_opts  = x$sql_opts
     )
   )
@@ -89,11 +89,11 @@ test_that("sql_create_table works with columns and primary keys", {
   expect_identical(
     sql_create_table(
       "test.table",
-      col_names = c("blah", "blubb"),
-      col_types = c("integer", "integer"),
+      col_name = c("blah", "blubb"),
+      col_type = c("integer", "integer"),
       col_opts  = c("", "not null"),
-      const_names = "X_TEST_PK",
-      const_types = "PRIMARY KEY",
+      const_name = "X_TEST_PK",
+      const_type = "PRIMARY KEY",
       const_cols = list(c("blah", "blubb"))
     ),
     "CREATE TABLE test.table (blah INTEGER, blubb INTEGER not null, CONSTRAINT X_TEST_PK PRIMARY KEY (blah, blubb))"
@@ -102,11 +102,11 @@ test_that("sql_create_table works with columns and primary keys", {
 
   expect_error(sql_create_table(
     "test.table",
-    col_names = c("blah", "blubb"),
-    col_types = c("integer", "integer"),
+    col_name = c("blah", "blubb"),
+    col_type = c("integer", "integer"),
     col_opts  = c("", "not null"),
-    const_names = "X_TEST_PK",
-    const_types = "PRIMARY KEY",
+    const_name = "X_TEST_PK",
+    const_type = "PRIMARY KEY",
     const_cols = list(c("blah", "blubb", "foo"))
   ), "foo")
 })
@@ -131,11 +131,11 @@ test_that("as_sql.table_design_sql works as expected with constraints", {
     as_sql(x, "test.table"),
     sql_create_table(
       "test.table",
-      col_names = c("blah", "blubb"),
-      col_types = c("integer", "integer"),
+      col_name = c("blah", "blubb"),
+      col_type = c("integer", "integer"),
       col_opts  = c("", "not null"),
-      const_names = "X_TEST_PK",
-      const_types = "PRIMARY KEY",
+      const_name = "X_TEST_PK",
+      const_type = "PRIMARY KEY",
       const_cols = list(c("blah", "blubb"))
     )
   )

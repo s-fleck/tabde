@@ -10,9 +10,9 @@
 \alias{is_table_design_fwf}
 \title{Coerce object to table_design}
 \usage{
-as_table_design(x)
+as_table_design(x, ...)
 
-\method{as_table_design}{data.frame}(x)
+\method{as_table_design}{data.frame}(x, ...)
 
 as_table_design_fwf(x)
 
@@ -26,6 +26,10 @@ is_table_design_fwf(x)
 }
 \arguments{
 \item{x}{any \R object}
+
+\item{...}{passed on to methods}
+
+\item{constraints}{a \link{tabde_constraints} object}
 }
 \value{
 a \code{table_design} object of the appropriate subclass

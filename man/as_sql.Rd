@@ -20,7 +20,7 @@ as_sql(x, ...)
 \code{character} scalar. An SQL CREATE TABLE statement.
 }
 \description{
-This does not perform any sanity check on the input data. \code{col_names} and
+This does not perform any sanity check on the input data. \code{col_name} and
 \code{sql_type} must be compatible with the DBMS that you want to use.
 }
 \examples{

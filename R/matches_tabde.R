@@ -91,9 +91,9 @@ matches_tabde <- function(
 
 
     # col types
-      col_types <- vapply(x, function(.) class(.)[[1]], "", USE.NAMES = FALSE)
+      col_type <- vapply(x, function(.) class(.)[[1]], "", USE.NAMES = FALSE)
       sel_types <- !is.na(table_design$col_type)
-      if (!identical(col_types[sel_types], table_design$col_type[sel_types]))
+      if (!identical(col_type[sel_types], table_design$col_type[sel_types]))
         return(FALSE)
 
 

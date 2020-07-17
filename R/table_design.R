@@ -1,12 +1,14 @@
 #' Coerce object to table_design
 #'
 #' @param x any \R object
+#' @param ... passed on to methods
 #'
 #' @return a `table_design` object of the appropriate subclass
 #' @export
-#'
-#'
-as_table_design <- function(x){
+as_table_design <- function(
+  x,
+  ...
+){
   UseMethod("as_table_design")
 }
 
@@ -14,8 +16,10 @@ as_table_design <- function(x){
 
 #' @rdname as_table_design
 #' @export
-#'
-as_table_design.data.frame <- function(x){
+as_table_design.data.frame <- function(
+  x,
+  ...
+){
   assert(all(c("col_name", "col_type") %in% names(x)))
   assert(is.character(x$col_name))
   assert(is.character(x$col_type))
@@ -31,7 +35,6 @@ as_table_design.data.frame <- function(x){
 
 #' @rdname as_table_design
 #' @export
-#'
 as_table_design_fwf <- function(x){
   UseMethod("as_table_design_fwf")
 }
@@ -52,10 +55,13 @@ as_table_design_fwf.data.frame <- function(x){
 
 
 
+#' @param constraints a [tabde_constraints] object
 #' @rdname as_table_design
 #' @export
-#'
-as_table_design_sql <- function(x, constraints = attr(x, "constraints")){
+as_table_design_sql <- function(
+  x,
+  constraints = attr(x, "constraints")
+){
   UseMethod("as_table_design_sql")
 }
 
@@ -116,14 +122,12 @@ has_domains <- function(x){
 
 
 
-#' Title
+#' Print a table_design object
 #'
-#' @param x
-#'
-#' @return
+#' @param x any \R object
+#' @param ... ignored
 #' @export
-#'
-#' @examples
+#' @return `x` (invisibly)
 print.table_design <- function(
   x,
   ...
@@ -135,4 +139,5 @@ print.table_design <- function(
     cat("\n")
     cat(style_yellow(toString(const)))
   }
+  invisible(x)
 }
