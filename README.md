@@ -1,7 +1,7 @@
 # tabde
 
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Travis build status](https://travis-ci.org/s-fleck/tabde.svg?branch=master)](https://travis-ci.org/s-fleck/tabde)
+[![Travis build status](https://travis-ci.com/s-fleck/tabde.svg?branch=master)](https://travis-ci.com/s-fleck/tabde)
 
 **tabde** enables you to ensure and verify the correct column names and data
 types for `data.frames` that are imported/exported from/to databases, .csv
