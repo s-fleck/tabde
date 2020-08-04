@@ -1,26 +1,33 @@
 Type: Package
 Package: tabde
-Title: Define and Check The Structure of Data Frames and Database Tables
-Version: 0.0.1.9018
-Authors@R: person("Stefan", "Fleck", email = "stefan.b.fleck@gmail.com", role = c("aut", "cre"))
+Title: Define and Check The Structure of Data Frames and
+    Database Tables
+Version: 0.0.1.9019
+Authors@R: 
+    person(given = "Stefan",
+           family = "Fleck",
+           role = c("aut", "cre"),
+           email = "stefan.b.fleck@gmail.com")
 Maintainer: Stefan Fleck <stefan.b.fleck@gmail.com>
-Description:
-    Define the structure (column names and types) of tables and save them as csv 
-    files. Tools are provided to use such table design to create database 
-    tables, read fwf and csv files, and check data.frames for validity.
+Description: Define the structure (column names and types)
+    of tables and save them as csv files. Tools are provided to use such
+    table design to create database tables, read fwf and csv files, and
+    check data.frames for validity.
 License: MIT + file LICENSE
+Depends:
+    R (>= 3.6.0)
 Imports: 
     utils
 Suggests: 
     assertthat,
-    readr,
-    testthat,
-    rprojroot,
+    crayon,
     data.table,
-    yaml,
+    readr,
     roxygen2,
-    crayon
+    rprojroot,
+    testthat,
+    yaml
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1.9000
 Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1.9000

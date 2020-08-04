@@ -132,11 +132,10 @@ sql_create_table_columns <- function(
   col_opts = rep("", length(col_name))
 ){
  # preconditions
-  stopifnot(
-    is.character(col_name),
-    is.character(col_type),
-    is_equal_length(col_name, col_type, col_opts)
-  )
+  assert_character(col_name)
+  assert_character(col_type)
+  assert_character(col_opts)
+  assert_equal_length(col_name, col_type, col_opts)
 
   assert(
     !anyNA(col_name) && all_are_distinct(col_name),

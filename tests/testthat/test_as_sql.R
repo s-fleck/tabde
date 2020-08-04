@@ -12,7 +12,7 @@ test_that("generate_sql works as expected", {
   expect_silent(sql_create_table("testtable", cn1[1:3], ct1[1:3]))
   expect_error(
     sql_create_table("testtable", cn1[1:3], ct1[1:2]),
-    "is_equal_length"
+    class = "ValueError"
   )
 
   ct1[[1]] <- NA
@@ -139,4 +139,11 @@ test_that("as_sql.table_design_sql works as expected with constraints", {
       const_cols = list(c("blah", "blubb"))
     )
   )
+})
+
+
+
+test_that("sql_create_table_columns fails gracefully", {
+  expect_error(sql_create_table_columns(1, "BLAH", "BLAH"), class = "TypeError")
+  expect_error(sql_create_table_columns("BLAH", "BLAH", c("BL", "AH")), class = "ValueError")
 })

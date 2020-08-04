@@ -9,7 +9,8 @@
 \alias{table_design_sql}
 \alias{tabde_fwf}
 \alias{tabde_sql}
-\title{tabde: Define and Check The Structure of Data Frames and Database Tables}
+\title{tabde: Define and Check The Structure of Data Frames and
+    Database Tables}
 \usage{
 tabde(
   col_name,
@@ -71,9 +72,10 @@ SQL statements.}
 a \code{data.frame} of class \code{table_design}
 }
 \description{
-Define the structure (column names and types) of tables and save them as csv 
-    files. Tools are provided to use such table design to create database 
-    tables, read fwf and csv files, and check data.frames for validity.
+Define the structure (column names and types)
+    of tables and save them as csv files. Tools are provided to use such
+    table design to create database tables, read fwf and csv files, and
+    check data.frames for validity.
 
 Table designs are \code{data.frames} that contain meta-info on other \code{data.frames}
 such as column names and types. Such \code{table_designs} can be used for
