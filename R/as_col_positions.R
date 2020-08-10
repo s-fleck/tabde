@@ -22,6 +22,6 @@ as_col_positions.table_design_fwf <- function(x){
   list(
     begin = x$fwf_start,
     end   = x$fwf_end,
-    col_name = x$col_name
+    col_names = x$col_name
   )
 }
