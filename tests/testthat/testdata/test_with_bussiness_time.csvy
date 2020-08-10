@@ -1,0 +1,37 @@
+#---
+#CONSTRAINT X_GVROAD_ERFT_DM_NUTS_PK PRIMARY KEY:
+#  - nuts1
+#  - nuts2
+#  - business_time without overlaps
+#
+#PERIOD business_time:
+#  - VON
+#  - BIS
+#
+#period:
+#  adventure_time:
+#    columns:
+#      - BIS
+#      - VON
+#
+#constraint:
+#  X_SPECIES_UQ:
+#    type: "UNIQUE"
+#    columns:
+#      - nuts1
+#      - nuts2
+#---
+col_name;col_type;sql_type;sql_opts;comment
+nuts1;character;varchar(5);NOT NULL;NUTS Region 1
+nuts2;character;varchar(5);NOT NULL;NUTS Region 2
+gu1;integer;smallint;NOT NULL;border crossing 1 (for receipt, dispatch, transit)
+gu2;integer;smallint;NOT NULL;border crossing 2 (for transit)
+km;numeric;double;NOT NULL;distance driven - total [km]
+kmi;numeric;double;NOT NULL;distance driven - domestic [km]
+kma;numeric;double;NOT NULL;distance driven - abroad [km]
+dur;numeric;double;NOT NULL;duration of journey - total [s]
+duri;numeric;double;;duration of journey - domestic [s]
+dura;numeric;double;;duration of journey - abroad [s]
+added;Date;date;NOT NULL;date on which the route was calculated
+von;Date;date;NOT NULL;valid from
+bis;Date;date;NOT NULL;valid until

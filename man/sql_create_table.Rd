@@ -10,6 +10,7 @@ sql_create_table(
   col_type,
   col_opts = rep("", length(col_name)),
   const_name = NULL,
+  const_class = NULL,
   const_type = NULL,
   const_cols = NULL
 )

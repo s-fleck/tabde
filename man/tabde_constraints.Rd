@@ -4,7 +4,7 @@
 \alias{tabde_constraints}
 \title{Table design SQL constraints}
 \usage{
-tabde_constraints(const_name, const_type, const_cols, ...)
+tabde_constraints(const_name, const_class, const_type, const_cols, ...)
 }
 \arguments{
 \item{const_name}{\code{character} vector. Name of the constraint.}

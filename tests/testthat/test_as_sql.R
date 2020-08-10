@@ -143,6 +143,35 @@ test_that("as_sql.table_design_sql works as expected with constraints", {
 
 
 
+
+test_that("as_sql.table_design_sql works as expected with constraints", {
+  x <- tabde_sql(
+    col_name = c("blah", "blubb"),
+    col_type = c("integer", "integer"),
+    sql_opts  = c("", "not null"),
+    sql_type = c("integer", "integer"),
+    .constraints = tabde_constraints(
+      const_name = "X_TEST_PK",
+      const_type = "PRIMARY KEY",
+      const_cols = list(c("blah", "blubb"))
+    )
+  )
+
+  expect_identical(
+    as_sql(x, "test.table"),
+    sql_create_table(
+      "test.table",
+      col_name = c("blah", "blubb"),
+      col_type = c("integer", "integer"),
+      col_opts  = c("", "not null"),
+      const_name = "X_TEST_PK",
+      const_type = "PRIMARY KEY",
+      const_cols = list(c("blah", "blubb"))
+    )
+  )
+})
+
+
 test_that("sql_create_table_columns fails gracefully", {
   expect_error(sql_create_table_columns(1, "BLAH", "BLAH"), class = "TypeError")
   expect_error(sql_create_table_columns("BLAH", "BLAH", c("BL", "AH")), class = "ValueError")

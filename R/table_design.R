@@ -133,7 +133,7 @@ print.table_design <- function(
   ...
 ){
   print.data.frame(x)
-  const <- attr(x, "constraints")
+  const <- attr(x, "header")
 
   if (!is.null(const)){
     cat("\n")

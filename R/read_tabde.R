@@ -62,8 +62,7 @@ read_tabde_csvy <- function(file){
   header <- yaml::read_yaml(text = gsub("^#", "", dd[sel]))
   res    <- read_tabde_csv(file)
 
-  if ("constraints" %in% names(header))
-    attr(res, "constraints") <- as_tabde_constraints(header[["constraints"]])
+  attr(res, "header") <- as_tabde_header(header)
 
   res
 }

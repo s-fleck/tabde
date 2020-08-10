@@ -2,7 +2,7 @@ Type: Package
 Package: tabde
 Title: Define and Check The Structure of Data Frames and
     Database Tables
-Version: 0.0.1.9019
+Version: 0.0.1.9020
 Authors@R: 
     person(given = "Stefan",
            family = "Fleck",

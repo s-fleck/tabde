@@ -38,17 +38,18 @@ as_sql.table_design_sql <- function(
   ...
 ){
   assert(is_scalar_character(tname))
-  constraints <- attr(x, "constraints")
+  header <- attr(x, "header")
 
-  if (!is.null(constraints)){
+  if (!is.null(header)){
     sql_create_table(
       tname = tname,
-      col_name = x$col_name,
-      col_type = x$sql_type,
-      col_opts  = x$sql_opts,
-      const_name = constraints$const_name,
-      const_type = constraints$const_type,
-      const_cols  = constraints$const_cols
+      col_name   = x$col_name,
+      col_type   = x$sql_type,
+      col_opts   = x$sql_opts,
+      const_name = header$const_name,
+      const_class = header$const_class,
+      const_type = header$const_type,
+      const_cols = header$const_cols
     )
   } else {
     sql_create_table(
@@ -90,23 +91,20 @@ sql_create_table <- function(
   col_name,
   col_type,
   col_opts = rep("", length(col_name)),
-  const_name = NULL,
-  const_type = NULL,
-  const_cols = NULL
+  const_name  = NULL,
+  const_class = NULL,
+  const_type  = NULL,
+  const_cols  = NULL
 ){
   # preconditions
   assert(is_scalar_character(tname))
-  assert(
-    all(unlist(const_cols) %in% col_name),
-    "All `const_cols` must be present the table definition. ",
-    "The following are not: ", paste(sort(setdiff(unlist(const_cols), col_name)), collapse = ", ")
-  )
 
   els <- sql_create_table_columns(col_name, col_type, col_opts)
 
   if (!is.null(const_name)){
     consts <- sql_create_table_constraints(
       const_name,
+      const_class,
       const_type,
       const_cols
     )
@@ -163,11 +161,13 @@ sql_create_table_columns <- function(
 
 sql_create_table_constraints <- function(
   const_name,
+  const_class,
   const_type,
   const_cols
 ){
   stopifnot(
     is.character(const_name),
+    is.character(const_class),
     is.character(const_type),
     is.list(const_cols),
     is_equal_length(const_name, const_type, const_cols)
@@ -182,12 +182,22 @@ sql_create_table_constraints <- function(
 
   const_type <- toupper(const_type)
 
-  assert(all(
-    const_type == "PRIMARY KEY"
-    # const_type == "FOREIGN KEY"
-  ), "The only supported constraint types are 'PRIMARY KEY'")
-
   fmt_cols <- function(.) paste0("(", paste(., collapse = ", "), ")")
 
-  paste("CONSTRAINT", const_name, const_type, vapply(const_cols, fmt_cols, character(1)))
+  mapply(
+    function(name, class, type, cols){
+      if (class == "raw"){
+        paste(name, fmt_cols(cols))
+      } else {
+        if (is.na(type)){
+          paste(class, name, fmt_cols(cols))
+        } else {
+          paste(class, name, type, fmt_cols(cols))
+        }
+
+      }
+    },
+    const_name, const_class, const_type, const_cols,
+    USE.NAMES = FALSE
+  )
 }
