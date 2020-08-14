@@ -1,0 +1,82 @@
+---
+title: "tabde"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tabde}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tabde)
+```
+
+# SQL constraints and periods
+
+tabde allows for table_design `.csvy` files that contain metadata on SQL 
+constraints and periods in a yaml header. 
+
+The simplest and most flexible way is to specify the constraints and periods as 
+raw SQL. Please note that the `:` at the end of each row is required to make the 
+header valid yaml.
+```{}
+#---
+#CONSTRAINT MYKEY PRIMARY KEY (ID, business_time without overlaps):
+#CONSTRAINT MYUNIQUE UNIQUE (ID2):
+#PERIOD business_time (BEGIN, END):
+#---
+col_name;col_type;sql_type;sql_opts;comment
+```
+
+
+The columns for each constraint/period can also be specified as yaml bullet
+lists
+```{}
+#---
+#CONSTRAINT MYKEY PRIMARY KEY:
+#  - ID
+#  - business_time without overlaps
+#
+#CONSTRAINT MYUNIQUE UNIQUE:
+#  - ID
+#
+#PERIOD business_time:
+#  - BEGIN
+#  - END
+#---
+col_name;col_type;sql_type;sql_opts;comment
+```
+
+Alternatively, there is also a more formal way to supply the constraints
+as pure yaml. Currently only constraints and periods are supported this way.
+```{}
+#---
+#period:
+#  business_time:
+#    columns:
+#      - BEGIN
+#      - END
+#
+#constraint:
+#  MYKEY:
+#    type: "PRIMARY KEY"
+#    columns:
+#      - ID
+#      - business_time without overlaps
+#
+#  MYUNIQUE:
+#    type: "UNIQUE"
+#    columns:
+#      - ID2
+#---
+col_name;col_type;sql_type;sql_opts;comment
+```
+
+
