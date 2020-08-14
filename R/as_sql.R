@@ -174,25 +174,30 @@ sql_create_table_constraints <- function(
   )
 
   assert(
-    all(vapply(const_cols, is.character, logical(1))),
-    "`cols` must be a list of `character` vectors"
+    all(vapply(const_cols, function(.) is.null(.) || is.character(.) , logical(1))),
+    "`const_cols` must be a list of `character` vectors"
   )
 
   assert(all_are_distinct(const_name))
 
   const_type <- toupper(const_type)
 
-  fmt_cols <- function(.) paste0("(", paste(., collapse = ", "), ")")
+  fmt_cols <- function(.){
+    if (is.null(.))
+      NULL
+    else
+      paste0("(", paste(., collapse = ", "), ")")
+  }
 
   mapply(
     function(name, class, type, cols){
       if (class == "raw"){
-        paste(name, fmt_cols(cols))
+        trimws(paste(name, fmt_cols(cols)))
       } else {
         if (is.na(type)){
-          paste(class, name, fmt_cols(cols))
+          trimws(paste(class, name, fmt_cols(cols)))
         } else {
-          paste(class, name, type, fmt_cols(cols))
+          trimws(paste(class, name, type, fmt_cols(cols)))
         }
 
       }

@@ -8,6 +8,8 @@
 #  - VON
 #  - BIS
 #
+#CONSTRAINT myunique (c1):
+#
 #period:
 #  adventure_time:
 #    columns:
