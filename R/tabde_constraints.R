@@ -77,6 +77,14 @@ as_tabde_header.list <- function(x){
     )
   }
 
+  parse_period <- function(.){
+    list(
+      class   = "period",
+      type    = NA_character_,
+      columns = .$columns
+    )
+  }
+
   parse_constraint <- function(.){
     list(
       class   = "constraint",
@@ -85,13 +93,7 @@ as_tabde_header.list <- function(x){
     )
   }
 
-  parse_period <- function(.){
-    list(
-      class   = "period",
-      type    = NA_character_,
-      columns = .$columns
-    )
-  }
+
 
   res <- list()
 
@@ -101,17 +103,16 @@ as_tabde_header.list <- function(x){
     parse_raw
   )
 
-
   if ("raw2" %in% names(x)){
     res[["raw"]] <- lapply(x[["raw"]], parse_raw)
   }
 
-  if ("constraint" %in% names(x)){
-    res[["constraint"]] <- lapply(x[["constraint"]], parse_constraint)
-  }
-
   if ("period" %in% names(x)){
     res[["period"]] <- lapply(x[["period"]], parse_period)
+  }
+
+  if ("constraint" %in% names(x)){
+    res[["constraint"]] <- lapply(x[["constraint"]], parse_constraint)
   }
 
   res <- unlist(unname(res), recursive = FALSE)

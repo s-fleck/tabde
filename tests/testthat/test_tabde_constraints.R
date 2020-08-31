@@ -13,7 +13,7 @@ test_that("tabde_constraints works as expected", {
 yaml <-
 '
 ---
-constraints:
+constraint:
   X_NAME_PK:
     type: "PRIMARY KEY"
     columns: name
@@ -26,7 +26,6 @@ constraints:
 ---
 '
   x <- yaml::read_yaml(text = yaml)
-  x <- x[["constraints"]]
   res <- as_tabde_constraints(x)
 
   expect_true(all(res$const_type == "PRIMARY KEY"))

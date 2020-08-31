@@ -38,7 +38,7 @@ pkg_options:
   # ignore_errors: (logical) sollen Fehler beim Checken des Pakets ignoriert werden? (default false)
   checks:
     ignore_warnings: true
-    ignore_errors: false
+    ignore_errors: true
 
   # block "tests":
   # skip: (logical) falls `true` werden tests übersprungen
