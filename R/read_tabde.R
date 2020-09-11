@@ -1,7 +1,7 @@
 #' Read a table definition file
 #'
 #' tabde recommends that you store table designs as semicolon (`;`) separated
-#' csv files with header and without rownames. `read_tabde()` reads such files
+#' csv files with constraints and without rownames. `read_tabde()` reads such files
 #' and assigns the correct table_design subclasses based on the columns that
 #' are present in `file` (f.e. `table_design_sql`, `table_design_fwf`).
 #'
@@ -59,10 +59,10 @@ read_tabde_csvy <- function(file){
   assert_namespace("yaml")
   dd  <- readLines(file)
   sel <- grepl("^#", dd)
-  header <- yaml::read_yaml(text = gsub("^#", "", dd[sel]))
+  constraints <- yaml::read_yaml(text = gsub("^#", "", dd[sel]))
   res    <- read_tabde_csv(file)
 
-  attr(res, "header") <- as_tabde_header(header)
+  attr(res, "constraints") <- as_tabde_constraints(constraints)
 
   res
 }

@@ -4,7 +4,13 @@
 \alias{tabde_constraints}
 \title{Table design SQL constraints}
 \usage{
-tabde_constraints(const_name, const_class, const_type, const_cols, ...)
+tabde_constraints(
+  const_name,
+  const_type,
+  const_cols,
+  const_class = "constraint",
+  ...
+)
 }
 \arguments{
 \item{const_name}{\code{character} vector. Name of the constraint.}
@@ -17,6 +23,8 @@ supported in the future}
 length as \code{const_name}. If each constraint only consists of a single
 column, \code{const_cols} may also be a \code{character} vector of the same length
 as \code{const_name}.}
+
+\item{const_class}{\code{character} vector. Either \code{CONSTRAINT}, \code{PERIOD} or \code{RAW}.}
 
 \item{...}{extra columns to be added to the resulting data.frame}
 }

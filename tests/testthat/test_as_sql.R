@@ -74,9 +74,10 @@ test_that("sql_create_table_cols works as expected", {
 
 test_that("sql_create_table_constraints works as expected for primary keys", {
   expect_identical(sql_create_table_constraints(
-    c("X_BLAH_PK"),
-    c("PRIMARY KEY"),
-    list(c("firstname", "lastname"))
+    const_name = "X_BLAH_PK",
+    const_class = "CONSTRAINT",
+    const_type = "PRIMARY KEY",
+    const_cols = list(c("firstname", "lastname"))
   ),
     "CONSTRAINT X_BLAH_PK PRIMARY KEY (firstname, lastname)"
   )
@@ -94,21 +95,11 @@ test_that("sql_create_table works with columns and primary keys", {
       col_opts  = c("", "not null"),
       const_name = "X_TEST_PK",
       const_type = "PRIMARY KEY",
+      const_class = "CONSTRAINT",
       const_cols = list(c("blah", "blubb"))
     ),
     "CREATE TABLE test.table (blah INTEGER, blubb INTEGER not null, CONSTRAINT X_TEST_PK PRIMARY KEY (blah, blubb))"
   )
-
-
-  expect_error(sql_create_table(
-    "test.table",
-    col_name = c("blah", "blubb"),
-    col_type = c("integer", "integer"),
-    col_opts  = c("", "not null"),
-    const_name = "X_TEST_PK",
-    const_type = "PRIMARY KEY",
-    const_cols = list(c("blah", "blubb", "foo"))
-  ), "foo")
 })
 
 
@@ -123,6 +114,7 @@ test_that("as_sql.table_design_sql works as expected with constraints", {
     .constraints = tabde_constraints(
       const_name = "X_TEST_PK",
       const_type = "PRIMARY KEY",
+      const_class = "CONSTRAINT",
       const_cols = list(c("blah", "blubb"))
     )
   )
@@ -136,6 +128,7 @@ test_that("as_sql.table_design_sql works as expected with constraints", {
       col_opts  = c("", "not null"),
       const_name = "X_TEST_PK",
       const_type = "PRIMARY KEY",
+      const_class = "CONSTRAINT",
       const_cols = list(c("blah", "blubb"))
     )
   )
@@ -153,6 +146,7 @@ test_that("as_sql.table_design_sql works as expected with constraints", {
     .constraints = tabde_constraints(
       const_name = "X_TEST_PK",
       const_type = "PRIMARY KEY",
+      const_class = "CONSTRAINT",
       const_cols = list(c("blah", "blubb"))
     )
   )
@@ -166,6 +160,7 @@ test_that("as_sql.table_design_sql works as expected with constraints", {
       col_opts  = c("", "not null"),
       const_name = "X_TEST_PK",
       const_type = "PRIMARY KEY",
+      const_class = "CONSTRAINT",
       const_cols = list(c("blah", "blubb"))
     )
   )
@@ -176,3 +171,4 @@ test_that("sql_create_table_columns fails gracefully", {
   expect_error(sql_create_table_columns(1, "BLAH", "BLAH"), class = "TypeError")
   expect_error(sql_create_table_columns("BLAH", "BLAH", c("BL", "AH")), class = "ValueError")
 })
+

@@ -27,6 +27,8 @@ Columns of type \code{NA} will be skipped}
 
 \item{const_name}{\code{character} vector. Name of the constraint.}
 
+\item{const_class}{\code{character} vector. Either \code{CONSTRAINT}, \code{PERIOD} or \code{RAW}.}
+
 \item{const_type}{\code{character} vector. Type of the constraint. Currently
 the only supported value is \code{"PRIMARY KEY"} but foreign keys will be
 supported in the future}

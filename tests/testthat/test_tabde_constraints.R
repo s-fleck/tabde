@@ -42,12 +42,13 @@ test_that("as_tabde_constraints.data.frame works as expected", {
 
   df <- data.frame(
     const_name = "foo",
+    const_class = "constraint",
     const_type = "primary key",
     const_cols = "id",
     metainfo = "foobar",
     othercol = "blah"
   )
 
-  expect_length(as_tabde_constraints(df), 5)
+  expect_length(as_tabde_constraints(df), 6)
   expect_s3_class(as_tabde_constraints(df), "tabde_constraints")
 })

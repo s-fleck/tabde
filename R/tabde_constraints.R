@@ -4,6 +4,7 @@
 #' @param const_type `character` vector. Type of the constraint. Currently
 #'   the only supported value is `"PRIMARY KEY"` but foreign keys will be
 #'   supported in the future
+#' @param const_class `character` vector. Either `CONSTRAINT`, `PERIOD` or `RAW`.
 #' @param const_cols a `list` of `character` vectors that must be the same
 #'   length as `const_name`. If each constraint only consists of a single
 #'   column, `const_cols` may also be a `character` vector of the same length
@@ -18,9 +19,9 @@
 #' tabde_constraints("PERSON_PK", "primary key", list(c("first_name", "last_name")))
 tabde_constraints <- function(
   const_name,
-  const_class,
   const_type,
   const_cols,
+  const_class = "constraint",
   ...
 ){
   if (is.character(const_cols))
@@ -50,14 +51,14 @@ tabde_constraints <- function(
 
 
 
-#' Coerce to tabde_header
+#' Coerce to tabde_constraints
 #'
 #' @param x any supported \R object
 #'
 #' @return a `tabde_constraints` object
 #' @export
-as_tabde_header <- function(x){
-  UseMethod("as_tabde_header")
+as_tabde_constraints <- function(x){
+  UseMethod("as_tabde_constraints")
 }
 
 
@@ -66,8 +67,7 @@ as_tabde_header <- function(x){
 
 #' @rdname as_tabde_constraints
 #' @export
-as_tabde_header.list <- function(x){
-
+as_tabde_constraints.list <- function(x){
 
   parse_raw <- function(.){
     list(
@@ -93,10 +93,7 @@ as_tabde_header.list <- function(x){
     )
   }
 
-
-
   res <- list()
-
 
   res[["raw1"]] <- lapply(
     x[setdiff(names(x), c("constraint", "period", "raw"))],
@@ -127,65 +124,23 @@ as_tabde_header.list <- function(x){
 
 
 
-#' Coerce to tabde_constraints
-#'
-#' @param x any supported \R object
-#'
-#' @return a `tabde_constraints` object
-#' @export
-as_tabde_constraints <- function(x){
-  UseMethod("as_tabde_constraints")
-}
-
-
-
-
 
 #' @rdname as_tabde_constraints
 #' @export
 as_tabde_constraints.data.frame <- function(x){
-  misc_cols <- x[, !colnames(x) %in% c("const_name", "const_type", "const_cols")]
+  misc_cols <- x[, !colnames(x) %in% c("const_name", "const_class", "const_type", "const_cols")]
 
   fct_to_char <- function(x) if (is.factor(x)) as.character(x) else (x)
 
   tabde_constraints(
     const_name = fct_to_char(x$const_name),
+    const_class = fct_to_char(x$const_class),
     const_type = fct_to_char(x$const_type),
     const_cols = fct_to_char(x$const_cols),
     misc_cols
   )
 }
 
-
-
-
-#' @rdname as_tabde_constraints
-#' @export
-as_tabde_constraints.list <- function(x){
-
-  parse_constraints <- function(x){
-    has_names <- function(x) is_equal_length(x, names(x))
-    if (has_names(x)){
-      list(
-        type = x$type,
-        columns = x$columns
-      )
-    } else {
-      list(
-        columns = x,
-        type = "<RAW>"
-      )
-    }
-  }
-
-  res <- lapply(x, parse_constraints)
-
-  tabde_constraints(
-    const_name = names(res),
-    const_type = vapply(res, `[[`, character(1), "type", USE.NAMES = FALSE),
-    const_cols = unname(lapply(res, `[[`, "columns"))
-  )
-}
 
 
 

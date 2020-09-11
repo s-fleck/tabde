@@ -1,5 +1,5 @@
 #---
-#constraints:
+#constraint:
 #  X_SPECIES_PK:
 #    type: "PRIMARY KEY"
 #    columns: Species

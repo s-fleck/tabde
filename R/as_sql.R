@@ -38,18 +38,18 @@ as_sql.table_design_sql <- function(
   ...
 ){
   assert(is_scalar_character(tname))
-  header <- attr(x, "header")
+  constraints <- attr(x, "constraints")
 
-  if (!is.null(header)){
+  if (!is.null(constraints)){
     sql_create_table(
       tname = tname,
       col_name   = x$col_name,
       col_type   = x$sql_type,
       col_opts   = x$sql_opts,
-      const_name = header$const_name,
-      const_class = header$const_class,
-      const_type = header$const_type,
-      const_cols = header$const_cols
+      const_name = constraints$const_name,
+      const_class = constraints$const_class,
+      const_type = constraints$const_type,
+      const_cols = constraints$const_cols
     )
   } else {
     sql_create_table(
