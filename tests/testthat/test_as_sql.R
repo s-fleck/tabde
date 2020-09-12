@@ -72,14 +72,14 @@ test_that("sql_create_table_cols works as expected", {
 
 
 
-test_that("sql_create_table_constraints works as expected for primary keys", {
-  expect_identical(sql_create_table_constraints(
+test_that("sql_create_table_sql_header works as expected for primary keys", {
+  expect_identical(tolower(sql_create_table_sql_header(
     const_name = "X_BLAH_PK",
     const_class = "CONSTRAINT",
     const_type = "PRIMARY KEY",
     const_cols = list(c("firstname", "lastname"))
-  ),
-    "CONSTRAINT X_BLAH_PK PRIMARY KEY (firstname, lastname)"
+  )),
+    tolower("CONSTRAINT X_BLAH_PK PRIMARY KEY (firstname, lastname)")
   )
 })
 
@@ -88,7 +88,7 @@ test_that("sql_create_table_constraints works as expected for primary keys", {
 
 test_that("sql_create_table works with columns and primary keys", {
   expect_identical(
-    sql_create_table(
+    tolower(sql_create_table(
       "test.table",
       col_name = c("blah", "blubb"),
       col_type = c("integer", "integer"),
@@ -97,21 +97,21 @@ test_that("sql_create_table works with columns and primary keys", {
       const_type = "PRIMARY KEY",
       const_class = "CONSTRAINT",
       const_cols = list(c("blah", "blubb"))
-    ),
-    "CREATE TABLE test.table (blah INTEGER, blubb INTEGER not null, CONSTRAINT X_TEST_PK PRIMARY KEY (blah, blubb))"
+    )),
+    tolower("CREATE TABLE test.table (blah INTEGER, blubb INTEGER not null, CONSTRAINT X_TEST_PK PRIMARY KEY (blah, blubb))")
   )
 })
 
 
 
 
-test_that("as_sql.table_design_sql works as expected with constraints", {
+test_that("as_sql.table_design_sql works as expected with sql_header", {
   x <- tabde_sql(
     col_name = c("blah", "blubb"),
     col_type = c("integer", "integer"),
     sql_opts  = c("", "not null"),
     sql_type = c("integer", "integer"),
-    .constraints = tabde_constraints(
+    .sql_header = sql_header(
       const_name = "X_TEST_PK",
       const_type = "PRIMARY KEY",
       const_class = "CONSTRAINT",
@@ -137,13 +137,13 @@ test_that("as_sql.table_design_sql works as expected with constraints", {
 
 
 
-test_that("as_sql.table_design_sql works as expected with constraints", {
+test_that("as_sql.table_design_sql works as expected with sql_header", {
   x <- tabde_sql(
     col_name = c("blah", "blubb"),
     col_type = c("integer", "integer"),
     sql_opts  = c("", "not null"),
     sql_type = c("integer", "integer"),
-    .constraints = tabde_constraints(
+    .sql_header = sql_header(
       const_name = "X_TEST_PK",
       const_type = "PRIMARY KEY",
       const_class = "CONSTRAINT",

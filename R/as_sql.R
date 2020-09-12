@@ -38,18 +38,18 @@ as_sql.table_design_sql <- function(
   ...
 ){
   assert(is_scalar_character(tname))
-  constraints <- attr(x, "constraints")
+  sql_header <- attr(x, "sql_header")
 
-  if (!is.null(constraints)){
+  if (!is.null(sql_header)){
     sql_create_table(
       tname = tname,
       col_name   = x$col_name,
       col_type   = x$sql_type,
       col_opts   = x$sql_opts,
-      const_name = constraints$const_name,
-      const_class = constraints$const_class,
-      const_type = constraints$const_type,
-      const_cols = constraints$const_cols
+      const_name = sql_header$const_name,
+      const_class = sql_header$const_class,
+      const_type = sql_header$const_type,
+      const_cols = sql_header$const_cols
     )
   } else {
     sql_create_table(
@@ -74,7 +74,7 @@ as_sql.table_design_sql <- function(
 #' @param col_type `character` scalar. Column types of target sql table.
 #'   Columns of type `NA` will be skipped
 #' @param col_opts column options of target sql table (for example `NOT NULL`)
-#' @inheritParams tabde_constraints
+#' @inheritParams sql_header
 #'
 #' @return a `CREATE TABLE` statement as a `character` scalar
 #' @export
@@ -92,9 +92,9 @@ sql_create_table <- function(
   col_type,
   col_opts = rep("", length(col_name)),
   const_name  = NULL,
-  const_class = NULL,
   const_type  = NULL,
-  const_cols  = NULL
+  const_cols  = NULL,
+  const_class = "constraint"
 ){
   # preconditions
   assert(is_scalar_character(tname))
@@ -102,11 +102,11 @@ sql_create_table <- function(
   els <- sql_create_table_columns(col_name, col_type, col_opts)
 
   if (!is.null(const_name)){
-    consts <- sql_create_table_constraints(
-      const_name,
-      const_class,
-      const_type,
-      const_cols
+    consts <- sql_create_table_sql_header(
+      const_name = const_name,
+      const_type = const_type,
+      const_cols = const_cols,
+      const_class = const_class
     )
 
     els <- c(els, consts)
@@ -154,16 +154,15 @@ sql_create_table_columns <- function(
   }
 
   trimws(paste0(col_name, " ", col_type, " ", col_opts))
-
 }
 
 
 
-sql_create_table_constraints <- function(
+sql_create_table_sql_header <- function(
   const_name,
-  const_class,
   const_type,
-  const_cols
+  const_cols,
+  const_class = "constraint"
 ){
   stopifnot(
     is.character(const_name),
@@ -179,8 +178,8 @@ sql_create_table_constraints <- function(
   )
 
   assert(all_are_distinct(const_name))
-
-  const_type <- toupper(const_type)
+  const_type  <- tolower(const_type)
+  const_class <- tolower(const_class)
 
   fmt_cols <- function(.){
     if (is.null(.))
@@ -188,6 +187,9 @@ sql_create_table_constraints <- function(
     else
       paste0("(", paste(., collapse = ", "), ")")
   }
+
+  if (!length(const_name))
+    return(list())
 
   mapply(
     function(name, class, type, cols){

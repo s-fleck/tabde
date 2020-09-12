@@ -31,7 +31,7 @@ is useful for piping the saved file, for example into
 }
 \description{
 tabde recommends that you store table designs as semicolon (\verb{;}) separated
-csv files with constraints and without rownames. \code{read_tabde()} reads such files
+csv files without rownames. \code{read_tabde()} reads such files
 and assigns the correct table_design subclasses based on the columns that
 are present in \code{file} (f.e. \code{table_design_sql}, \code{table_design_fwf}).
 }

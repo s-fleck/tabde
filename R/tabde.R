@@ -7,9 +7,9 @@
 #'
 #' @section Database constraints:
 #'
-#' A table design can contain a [tabde_constraints()] object that
+#' A table design can contain a [sql_header()] object that
 #' represents database constraints (such as *primary key*) as the attribute
-#' `'constraints'`. If such an attribute is present, [as_sql()] will use it
+#' `'sql_header'`. If such an attribute is present, [as_sql()] will use it
 #' when transforming a table design to an SQL `CREATE TABLE` statement.
 #'
 #' @section Storing table_designs:
@@ -115,7 +115,7 @@ tabde_fwf <- function(
 
 
 
-#' @param .constraints a [tabde_constraints()] `data.frame`
+#' @param .sql_header a [sql_header()] `data.frame`
 #' @rdname tabde
 #' @param sql_type  `character` vector. SQL Data Types as supported by target
 #'   DBMS System. Columns with col_type `NA` will be skipped when creating
@@ -128,7 +128,7 @@ tabde_fwf <- function(
 #'    col_name = c("first_name", "last_name", "age"),
 #'    col_type = c("character", "character", "integer"),
 #'    sql_type = c("varchar(255)", "varchar(255)", "integer"),
-#'     .constraints = tabde_constraints(
+#'     .sql_header = sql_header(
 #'       "person_pk",
 #'       "primary key",
 #'       list(c("first_name", "last_name"))
@@ -141,7 +141,7 @@ tabde_sql <- function(
   sql_opts = rep(NA_character_, length(col_name)),
   col_domain = NULL,
   ...,
-  .constraints = NULL
+  .sql_header = NULL
 ){
   res <- tabde(
     col_name = col_name,
@@ -152,5 +152,5 @@ tabde_sql <- function(
     ...
   )
 
-  as_table_design_sql(res, constraints = .constraints)
+  as_table_design_sql(res, sql_header = .sql_header)
 }

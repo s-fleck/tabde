@@ -1,14 +1,14 @@
-context("tabde_constraints")
+context("sql_header")
 
 
-test_that("tabde_constraints works as expected", {
-  expect_true(nrow(tabde_constraints("blubb", "primary key", "foo")) == 1L)
-  expect_true(nrow(tabde_constraints("blubb", "primary key", list(c("foo", "bar")))) == 1L)
+test_that("sql_header works as expected", {
+  expect_true(nrow(sql_header("blubb", "primary key", "foo")) == 1L)
+  expect_true(nrow(sql_header("blubb", "primary key", list(c("foo", "bar")))) == 1L)
 })
 
 
 
-test_that("tabde_constraints works as expected", {
+test_that("sql_header works as expected", {
 
 yaml <-
 '
@@ -26,7 +26,7 @@ constraint:
 ---
 '
   x <- yaml::read_yaml(text = yaml)
-  res <- as_tabde_constraints(x)
+  res <- as_sql_header(x)
 
   expect_true(all(res$const_type == "PRIMARY KEY"))
   expect_identical(
@@ -38,7 +38,7 @@ constraint:
 
 
 
-test_that("as_tabde_constraints.data.frame works as expected", {
+test_that("as_sql_header.data.frame works as expected", {
 
   df <- data.frame(
     const_name = "foo",
@@ -49,6 +49,6 @@ test_that("as_tabde_constraints.data.frame works as expected", {
     othercol = "blah"
   )
 
-  expect_length(as_tabde_constraints(df), 6)
-  expect_s3_class(as_tabde_constraints(df), "tabde_constraints")
+  expect_length(as_sql_header(df), 6)
+  expect_s3_class(as_sql_header(df), "sql_header")
 })

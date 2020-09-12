@@ -35,7 +35,7 @@ tabde_sql(
   sql_opts = rep(NA_character_, length(col_name)),
   col_domain = NULL,
   ...,
-  .constraints = NULL
+  .sql_header = NULL
 )
 }
 \arguments{
@@ -66,7 +66,7 @@ SQL statements.}
 \item{sql_opts}{\code{character} vector. SQL Options to be used by \code{\link[=as_sql]{as_sql()}}
 (for example \verb{NOT NULL})}
 
-\item{.constraints}{a \code{\link[=tabde_constraints]{tabde_constraints()}} \code{data.frame}}
+\item{.sql_header}{a \code{\link[=sql_header]{sql_header()}} \code{data.frame}}
 }
 \value{
 a \code{data.frame} of class \code{table_design}
@@ -85,9 +85,9 @@ files, etc...
 \section{Database constraints}{
 
 
-A table design can contain a \code{\link[=tabde_constraints]{tabde_constraints()}} object that
+A table design can contain a \code{\link[=sql_header]{sql_header()}} object that
 represents database constraints (such as \emph{primary key}) as the attribute
-\code{'constraints'}. If such an attribute is present, \code{\link[=as_sql]{as_sql()}} will use it
+\code{'sql_header'}. If such an attribute is present, \code{\link[=as_sql]{as_sql()}} will use it
 when transforming a table design to an SQL \verb{CREATE TABLE} statement.
 }
 
@@ -104,7 +104,7 @@ tabde_sql(
    col_name = c("first_name", "last_name", "age"),
    col_type = c("character", "character", "integer"),
    sql_type = c("varchar(255)", "varchar(255)", "integer"),
-    .constraints = tabde_constraints(
+    .sql_header = sql_header(
       "person_pk",
       "primary key",
       list(c("first_name", "last_name"))

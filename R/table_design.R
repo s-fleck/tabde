@@ -55,12 +55,12 @@ as_table_design_fwf.data.frame <- function(x){
 
 
 
-#' @param constraints a [tabde_constraints] object
+#' @param sql_header a [sql_header] object
 #' @rdname as_table_design
 #' @export
 as_table_design_sql <- function(
   x,
-  constraints = attr(x, "constraints")
+  sql_header = attr(x, "sql_header")
 ){
   UseMethod("as_table_design_sql")
 }
@@ -72,15 +72,15 @@ as_table_design_sql <- function(
 #' @export
 as_table_design_sql.data.frame <- function(
   x,
-  constraints = attr(x, "constraints")
+  sql_header = attr(x, "sql_header")
 ){
-  if (!is.null(constraints))
-    constraints <- as_tabde_constraints(constraints)
+  if (!is.null(sql_header))
+    sql_header <- as_sql_header(sql_header)
 
   assert(all(c("sql_type", "sql_opts") %in% names(x)))
   x <- as_table_design(x)
   class(x) <- union("table_design_sql", class(x))
-  attr(x, "constraints") <- constraints
+  attr(x, "sql_header") <- sql_header
   x
 }
 
@@ -133,7 +133,7 @@ print.table_design <- function(
   ...
 ){
   print.data.frame(x)
-  const <- attr(x, "constraints")
+  const <- attr(x, "sql_header")
 
   if (!is.null(const)){
     cat("\n")

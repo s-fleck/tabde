@@ -1,4 +1,4 @@
-#' Table design SQL constraints
+#' Table design SQL Header
 #'
 #' @param const_name `character` vector. Name of the constraint.
 #' @param const_type `character` vector. Type of the constraint. Currently
@@ -15,9 +15,9 @@
 #' @export
 #'
 #' @examples
-#' tabde_constraints("PERSON_PK", "primary key", "name")
-#' tabde_constraints("PERSON_PK", "primary key", list(c("first_name", "last_name")))
-tabde_constraints <- function(
+#' sql_header("PERSON_PK", "primary key", "name")
+#' sql_header("PERSON_PK", "primary key", list(c("first_name", "last_name")))
+sql_header <- function(
   const_name,
   const_type,
   const_cols,
@@ -45,29 +45,29 @@ tabde_constraints <- function(
     row.names = NULL,
     ...
   ),
-    class = c("tabde_constraints", "data.frame")
+    class = c("sql_header", "data.frame")
   )
 }
 
 
 
-#' Coerce to tabde_constraints
+#' Coerce to sql_header
 #'
 #' @param x any supported \R object
 #'
-#' @return a `tabde_constraints` object
+#' @return a `sql_header` object
 #' @export
-as_tabde_constraints <- function(x){
-  UseMethod("as_tabde_constraints")
+as_sql_header <- function(x){
+  UseMethod("as_sql_header")
 }
 
 
 
 
 
-#' @rdname as_tabde_constraints
+#' @rdname as_sql_header
 #' @export
-as_tabde_constraints.list <- function(x){
+as_sql_header.list <- function(x){
 
   parse_raw <- function(.){
     list(
@@ -114,7 +114,7 @@ as_tabde_constraints.list <- function(x){
 
   res <- unlist(unname(res), recursive = FALSE)
 
-  tabde_constraints(
+  sql_header(
     const_name  = names(res),
     const_class = vapply(res, `[[`, character(1), "class", USE.NAMES = FALSE),
     const_type  = vapply(res, `[[`, character(1), "type", USE.NAMES = FALSE),
@@ -125,14 +125,14 @@ as_tabde_constraints.list <- function(x){
 
 
 
-#' @rdname as_tabde_constraints
+#' @rdname as_sql_header
 #' @export
-as_tabde_constraints.data.frame <- function(x){
+as_sql_header.data.frame <- function(x){
   misc_cols <- x[, !colnames(x) %in% c("const_name", "const_class", "const_type", "const_cols")]
 
   fct_to_char <- function(x) if (is.factor(x)) as.character(x) else (x)
 
-  tabde_constraints(
+  sql_header(
     const_name = fct_to_char(x$const_name),
     const_class = fct_to_char(x$const_class),
     const_type = fct_to_char(x$const_type),
@@ -144,21 +144,21 @@ as_tabde_constraints.data.frame <- function(x){
 
 
 
-#' Convert tabde_constraints to a character string
+#' Convert sql_header to a character string
 #'
 #' @param x any \R object
 #' @param ... ignored
 #' @return a `character` scalar
 #' @export
-toString.tabde_constraints <- function(
+toString.sql_header <- function(
   x,
   ...
 ){
- paste(sql_create_table_constraints(
-   x$const_name,
-   x$const_class,
-   x$const_type,
-   x$const_cols
+ paste(sql_create_table_sql_header(
+   const_name = x$const_name,
+   const_type = x$const_type,
+   const_cols = x$const_cols,
+   const_class = x$const_class
   ),
   collapse = "\n"
  )

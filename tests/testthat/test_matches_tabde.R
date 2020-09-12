@@ -114,7 +114,7 @@ test_that("matches_tabde uses values", {
 
 
 
-test_that("matches_tabde check NOT NULL constraints", {
+test_that("matches_tabde check NOT NULL sql_header", {
 
   td <- tabde_sql(
     col_name = c("blah", "blubb", "foo", "bar", "log"),

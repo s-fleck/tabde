@@ -16,7 +16,7 @@ as_table_design(x, ...)
 
 as_table_design_fwf(x)
 
-as_table_design_sql(x, constraints = attr(x, "constraints"))
+as_table_design_sql(x, sql_header = attr(x, "sql_header"))
 
 is_table_design(x)
 
@@ -29,7 +29,7 @@ is_table_design_fwf(x)
 
 \item{...}{passed on to methods}
 
-\item{constraints}{a \link{tabde_constraints} object}
+\item{sql_header}{a \link{sql_header} object}
 }
 \value{
 a \code{table_design} object of the appropriate subclass

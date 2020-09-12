@@ -10,9 +10,9 @@ sql_create_table(
   col_type,
   col_opts = rep("", length(col_name)),
   const_name = NULL,
-  const_class = NULL,
   const_type = NULL,
-  const_cols = NULL
+  const_cols = NULL,
+  const_class = "constraint"
 )
 }
 \arguments{
@@ -27,8 +27,6 @@ Columns of type \code{NA} will be skipped}
 
 \item{const_name}{\code{character} vector. Name of the constraint.}
 
-\item{const_class}{\code{character} vector. Either \code{CONSTRAINT}, \code{PERIOD} or \code{RAW}.}
-
 \item{const_type}{\code{character} vector. Type of the constraint. Currently
 the only supported value is \code{"PRIMARY KEY"} but foreign keys will be
 supported in the future}
@@ -37,6 +35,8 @@ supported in the future}
 length as \code{const_name}. If each constraint only consists of a single
 column, \code{const_cols} may also be a \code{character} vector of the same length
 as \code{const_name}.}
+
+\item{const_class}{\code{character} vector. Either \code{CONSTRAINT}, \code{PERIOD} or \code{RAW}.}
 }
 \value{
 a \verb{CREATE TABLE} statement as a \code{character} scalar
