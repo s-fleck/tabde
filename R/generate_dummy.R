@@ -10,7 +10,7 @@
 #' @examples
 generate_dummy_df <- function(
   table_design,
-  n,
+  n = 6,
   ...
 ){
   l <- list()
@@ -31,7 +31,7 @@ generate_dummy_df <- function(
       l[[col]] <- overrides[[col]]
 
     } else if ("sql_type" %in% names(table_design)){
-      l[[col]] <- generate_dummy_col(st)
+      l[[col]] <- generate_dummy_col(st, n = n)
     }
   }
   as.data.frame(l)
