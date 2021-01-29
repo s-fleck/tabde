@@ -82,7 +82,7 @@ matches_tabde <- function(
 
   # logic
     cols_skip <- table_design$col_name[table_design$col_type %in% skip]
-    x <- x[, !colnames(x) %in% cols_skip]
+    x <- x[, !colnames(x) %in% cols_skip, drop = FALSE]
     table_design <- table_design[!table_design$col_type %in% skip, ]
 
     # col names
