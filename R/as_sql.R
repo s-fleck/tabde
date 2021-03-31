@@ -132,6 +132,11 @@ sql_create_table_columns <- function(
  # preconditions
   assert_character(col_name)
   assert_character(col_type)
+
+  if (all(is.na(col_opts))){
+    col_opts <- rep("", length(col_opts))
+  }
+
   assert_character(col_opts)
   assert_equal_length(col_name, col_type, col_opts)
 
